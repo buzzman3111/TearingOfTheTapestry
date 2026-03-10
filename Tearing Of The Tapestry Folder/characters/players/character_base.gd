@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var player_index = 0
+
 # Replace with attack object
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 @onready var attack_sprite: Sprite2D = $RayCast2D/AttackSprite
@@ -11,6 +13,7 @@ extends CharacterBody2D
 @export var DASH_COOLDOWN = 0.75
 @export var DASH_SPEED = 1000.0
 
+const DEADZONE = 0.5
 const ATTACK_DURATION = 0.1
 const DASH_DECAY = 2000
 
@@ -27,12 +30,18 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Movement
-	# Gets the direction of the left joystick as a Vecctor2
-	var move_dir = Input.get_vector('left', 'right', 'up', 'down')
+	# Gets the direction of the left joystick
+	var move_dir_x = Input.get_joy_axis(player_index, 0)
+	var move_dir_y = Input.get_joy_axis(player_index, 1)
+	var move_dir = Vector2(move_dir_x, move_dir_y)
+	if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
+		move_dir = Vector2.ZERO
 	var base_vel = move_dir * SPEED
 	
+	
 	# If we can dash and we press dash, we dash
-	if Input.is_action_just_pressed('dash') and CAN_DASH:
+	if (Input.is_joy_button_pressed(player_index, InputMapper.dash_button)
+	or (Input.get_joy_axis(player_index, InputMapper.dash_trigger) > 0)) and CAN_DASH:
 		CAN_DASH = false
 		_dash(move_dir)
 	
@@ -45,23 +54,31 @@ func _physics_process(delta: float) -> void:
 	
 	
 	# Attacks
-	# Gets direction of right joystick as Vector2
-	var aim_dir = Input.get_vector('aim_left', 'aim_right', 'aim_up', 'aim_down')
-	# This check adds some deadzone to the joystick to prevent unwanted turnarounds
-	if (aim_dir.length() > 0.3) and !IS_ATTACKING:
+	var aim_dir_x = Input.get_joy_axis(player_index, InputMapper.aim_x)
+	var aim_dir_y = Input.get_joy_axis(player_index, InputMapper.aim_y)
+	var aim_dir = Vector2(aim_dir_x, aim_dir_y)
+	if (aim_dir.length() > DEADZONE) and !IS_ATTACKING: # This check adds some deadzone to the joystick
 		ray_cast_2d.rotation = aim_dir.angle()
 	
-	if Input.is_action_just_pressed('attack') and CAN_ATTACK:
+	if (Input.get_joy_axis(player_index, InputMapper.attack)) and CAN_ATTACK:
 		# CAN_ATTACK and IS_ATTACKING are separate so that we can prevent millisecond attacks
-		# and lock the attack direction while the attack is going off
-		# I'd like to get rid of IS_ATTACKING if possible cuz doing this for abilities will suck
+		# 		and lock the attack direction while the attack is going off
+		# I'd like to get rid of IS_ATTACKING if possible cuz doing this 
+		# 		for abilities will suck to keep track of
 		CAN_ATTACK = false
 		IS_ATTACKING = true
 		_attack()
 
 
-# Handles basic attacks
 func _attack():
+	_basic_attack()
+
+func _dash(move_dir):
+	_basic_dash(move_dir)
+
+
+# Handles basic attacks
+func _basic_attack():
 	attack_sprite.visible = true
 	await get_tree().create_timer(ATTACK_DURATION).timeout
 	
@@ -72,8 +89,8 @@ func _attack():
 	CAN_ATTACK = true
 
 
-# Handles dashes
-func _dash(move_dir: Vector2):
-	dash_vel = move_dir * DASH_SPEED
+# Handles basic dashes
+func _basic_dash(move_dir: Vector2):
+	dash_vel = move_dir.normalized() * DASH_SPEED
 	await get_tree().create_timer(DASH_COOLDOWN).timeout
 	CAN_DASH = true
