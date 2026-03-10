@@ -1,20 +1,14 @@
 extends CharacterBody2D
+class_name CharacterBase
 
 @export var player_index = 0
 
 # Replace with attack object
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 @onready var attack_sprite: Sprite2D = $RayCast2D/AttackSprite
-
-
-# Add to character stats page
-@export var SPEED = 300.0
-@export var ATTACK_COOLDOWN = 0.2
-@export var DASH_COOLDOWN = 0.75
-@export var DASH_SPEED = 1000.0
+@onready var PS: Node = $PlayerStats
 
 const DEADZONE = 0.5
-const ATTACK_DURATION = 0.1
 const DASH_DECAY = 2000
 
 var CAN_ATTACK = true
@@ -36,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	var move_dir = Vector2(move_dir_x, move_dir_y)
 	if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
 		move_dir = Vector2.ZERO
-	var base_vel = move_dir * SPEED
+	var base_vel = move_dir * PS.SPEED
 	
 	
 	# If we can dash and we press dash, we dash
@@ -80,17 +74,17 @@ func _dash(move_dir):
 # Handles basic attacks
 func _basic_attack():
 	attack_sprite.visible = true
-	await get_tree().create_timer(ATTACK_DURATION).timeout
+	await get_tree().create_timer(PS.ATTACK_DURATION).timeout
 	
 	attack_sprite.visible = false
 	IS_ATTACKING = false
-	await get_tree().create_timer(ATTACK_COOLDOWN).timeout
+	await get_tree().create_timer(PS.ATTACK_COOLDOWN).timeout
 	
 	CAN_ATTACK = true
 
 
 # Handles basic dashes
 func _basic_dash(move_dir: Vector2):
-	dash_vel = move_dir.normalized() * DASH_SPEED
-	await get_tree().create_timer(DASH_COOLDOWN).timeout
+	dash_vel = move_dir.normalized() * PS.DASH_SPEED
+	await get_tree().create_timer(PS.DASH_COOLDOWN).timeout
 	CAN_DASH = true
