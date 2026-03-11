@@ -6,7 +6,8 @@ class_name CharacterBase
 # Replace with attack object
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 @onready var attack_sprite: Sprite2D = $RayCast2D/AttackSprite
-@onready var PS: Node = $PlayerStats
+@onready var player_sprite: Sprite2D = $PlayerSprite
+@onready var STATS: Node = $PlayerStats
 
 const DEADZONE = 0.5
 const DASH_DECAY = 2000
@@ -30,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	var move_dir = Vector2(move_dir_x, move_dir_y)
 	if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
 		move_dir = Vector2.ZERO
-	var base_vel = move_dir * PS.SPEED
+	var base_vel = move_dir * STATS.SPEED
 	
 	
 	# If we can dash and we press dash, we dash
@@ -54,6 +55,7 @@ func _physics_process(delta: float) -> void:
 	if (aim_dir.length() > DEADZONE) and !IS_ATTACKING: # This check adds some deadzone to the joystick
 		ray_cast_2d.rotation = aim_dir.angle()
 	
+	# If we click the attcak button and can attack, we attack
 	if (Input.get_joy_axis(player_index, InputMapper.attack)) and CAN_ATTACK:
 		# CAN_ATTACK and IS_ATTACKING are separate so that we can prevent millisecond attacks
 		# 		and lock the attack direction while the attack is going off
@@ -62,6 +64,19 @@ func _physics_process(delta: float) -> void:
 		CAN_ATTACK = false
 		IS_ATTACKING = true
 		_attack()
+	
+	
+	# Rudementary sprite logic
+	if CAN_ATTACK:
+		if move_dir_x > 0:
+			player_sprite.flip_h = false
+		if move_dir_x < 0:
+			player_sprite.flip_h = true
+	else:
+		if aim_dir_x > 0:
+			player_sprite.flip_h = false
+		if aim_dir_x < 0:
+			player_sprite.flip_h = true
 
 
 func _attack():
@@ -74,17 +89,17 @@ func _dash(move_dir):
 # Handles basic attacks
 func _basic_attack():
 	attack_sprite.visible = true
-	await get_tree().create_timer(PS.ATTACK_DURATION).timeout
+	await get_tree().create_timer(STATS.ATTACK_DURATION).timeout
 	
 	attack_sprite.visible = false
 	IS_ATTACKING = false
-	await get_tree().create_timer(PS.ATTACK_COOLDOWN).timeout
+	await get_tree().create_timer(STATS.ATTACK_COOLDOWN).timeout
 	
 	CAN_ATTACK = true
 
 
 # Handles basic dashes
 func _basic_dash(move_dir: Vector2):
-	dash_vel = move_dir.normalized() * PS.DASH_SPEED
-	await get_tree().create_timer(PS.DASH_COOLDOWN).timeout
+	dash_vel = move_dir.normalized() * STATS.DASH_SPEED
+	await get_tree().create_timer(STATS.DASH_COOLDOWN).timeout
 	CAN_DASH = true
