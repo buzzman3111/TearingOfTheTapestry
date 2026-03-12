@@ -1,7 +1,8 @@
 class_name Projectile
 extends Node2D
 
-@onready var sprite_2d: Sprite2D = $Sprite2D
+#@onready var sprite_2d: Sprite2D = $Sprite2D
+
 
 var RANGE: float
 var SPEED: float
@@ -22,6 +23,10 @@ func _process(delta: float) -> void:
 		self.queue_free()
 
 
-func _apply_dir_rot(move_dir: Vector2, sprite_rotation: float) -> void:
+func _apply_dir_rot(move_dir: Vector2, rotation: float) -> void:
 	self.move_dir = move_dir
-	self.rotation = sprite_rotation
+	self.rotation = rotation + PI/2
+
+
+#func _set_texture(texture: CompressedTexture2D) -> void:
+	#self.sprite_2d.texture = texture
