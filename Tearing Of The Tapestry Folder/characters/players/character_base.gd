@@ -3,31 +3,31 @@ class_name CharacterBase
 
 @export var player_index = 0
 
-# Replace with attack object
-@onready var ray_cast_2d: RayCast2D = $RayCast2D
-@onready var attack_sprite: Sprite2D = $RayCast2D/AttackSprite
+@onready var projectile_spawner: ProjectileSpawner = $ProjectileSpawner
 @onready var player_sprite: Sprite2D = $PlayerSprite
 @onready var STATS: Node = $PlayerStats
+@onready var aim_node: Node2D = $Aim
+
 
 const DEADZONE = 0.5
 const DASH_DECAY = 2000
 
 var CAN_ATTACK = true
 var CAN_DASH = true
-var IS_ATTACKING = false
 
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
 
+
 func _ready() -> void:
-	attack_sprite.visible = false
+	pass
 
 
 func _physics_process(delta: float) -> void:
 	# Movement
 	# Gets the direction of the left joystick
-	var move_dir_x = Input.get_joy_axis(player_index, 0)
-	var move_dir_y = Input.get_joy_axis(player_index, 1)
+	var move_dir_x = Input.get_joy_axis(player_index, InputMapper.move_x)
+	var move_dir_y = Input.get_joy_axis(player_index, InputMapper.move_y)
 	var move_dir = Vector2(move_dir_x, move_dir_y)
 	if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
 		move_dir = Vector2.ZERO
@@ -52,17 +52,12 @@ func _physics_process(delta: float) -> void:
 	var aim_dir_x = Input.get_joy_axis(player_index, InputMapper.aim_x)
 	var aim_dir_y = Input.get_joy_axis(player_index, InputMapper.aim_y)
 	var aim_dir = Vector2(aim_dir_x, aim_dir_y)
-	if (aim_dir.length() > DEADZONE) and !IS_ATTACKING: # This check adds some deadzone to the joystick
-		ray_cast_2d.rotation = aim_dir.angle()
+	if aim_dir.length() > DEADZONE: # This check adds some deadzone to the joystick
+		aim_node.rotation = aim_dir.angle()
 	
 	# If we click the attcak button and can attack, we attack
 	if (Input.get_joy_axis(player_index, InputMapper.attack)) and CAN_ATTACK:
-		# CAN_ATTACK and IS_ATTACKING are separate so that we can prevent millisecond attacks
-		# 		and lock the attack direction while the attack is going off
-		# I'd like to get rid of IS_ATTACKING if possible cuz doing this 
-		# 		for abilities will suck to keep track of
 		CAN_ATTACK = false
-		IS_ATTACKING = true
 		_attack()
 	
 	
@@ -70,12 +65,12 @@ func _physics_process(delta: float) -> void:
 	if CAN_ATTACK:
 		if move_dir_x > 0:
 			player_sprite.flip_h = false
-		if move_dir_x < 0:
+		elif move_dir_x < 0:
 			player_sprite.flip_h = true
 	else:
 		if aim_dir_x > 0:
 			player_sprite.flip_h = false
-		if aim_dir_x < 0:
+		elif aim_dir_x < 0:
 			player_sprite.flip_h = true
 
 
@@ -88,13 +83,8 @@ func _dash(move_dir):
 
 # Handles basic attacks
 func _basic_attack():
-	attack_sprite.visible = true
-	await get_tree().create_timer(STATS.ATTACK_DURATION).timeout
-	
-	attack_sprite.visible = false
-	IS_ATTACKING = false
+	projectile_spawner._fire()
 	await get_tree().create_timer(STATS.ATTACK_COOLDOWN).timeout
-	
 	CAN_ATTACK = true
 
 

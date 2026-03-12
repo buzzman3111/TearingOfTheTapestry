@@ -5,7 +5,7 @@ extends Node
 # 	Input.get_joy_axis and Input.is_joy_button_pressed) require numbered indicies instead of string
 # 	names like the built in mapper uses. Not to mention the version I have now distinguishes between
 # 	'axis' and 'button' which is what this script intends to simplify
-# The alternative is the 2nd thing I sent in the technical-jargon chanel in the discord, which just
+# An alternative is the 2nd thing I sent in the technical-jargon chanel in the discord, which just
 # 	fixes this exact problem as a built-in from the asset library.
 
 # Joy Button
