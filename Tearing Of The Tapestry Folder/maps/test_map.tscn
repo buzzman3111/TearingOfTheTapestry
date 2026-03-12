@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dijida56qdga6"]
-
-[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_6slyc"]
-
-[node name="TestMap" type="Node2D"]
-
-[node name="CharacterBase" parent="." instance=ExtResource("1_6slyc")]
-position = Vector2(593, 291)

@@ -1,0 +1,27 @@
+class_name Projectile
+extends Node2D
+
+@onready var sprite_2d: Sprite2D = $Sprite2D
+
+var RANGE: float
+var SPEED: float
+
+var move_dir: Vector2
+var start_pos: Vector2
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	self.top_level = true
+	start_pos = self.global_position
+
+
+func _process(delta: float) -> void:
+	self.global_position += move_dir * SPEED * delta
+	if self.global_position.distance_to(start_pos) >= RANGE:
+		self.queue_free()
+
+
+func _apply_dir_rot(move_dir: Vector2, sprite_rotation: float) -> void:
+	self.move_dir = move_dir
+	self.rotation = sprite_rotation

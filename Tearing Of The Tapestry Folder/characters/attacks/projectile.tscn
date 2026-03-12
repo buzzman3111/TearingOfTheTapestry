@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvoknyentl3x2"]
+
+[ext_resource type="Script" uid="uid://b7rlrmxxhmwng" path="res://characters/attacks/projectile.gd" id="1_0xxol"]
+[ext_resource type="Texture2D" uid="uid://d14dk58ivj0py" path="res://assets/art/YnosOnosProjectile.png" id="2_tyxx7"]
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_0xxol")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(10, 10)
+texture = ExtResource("2_tyxx7")
