@@ -21,6 +21,9 @@ texture = ExtResource("2_dqnst")
 offset = Vector2(0, -1)
 region_rect = Rect2(9, 4, 11, 26)
 
+[node name="PlayerStats" parent="." index="1" unique_id=2105738643]
+SPEED = 400.0
+
 [node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
 projectile_scenes = Array[PackedScene]([ExtResource("4_s5ebq")])
 

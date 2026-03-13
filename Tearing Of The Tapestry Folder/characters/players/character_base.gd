@@ -127,20 +127,20 @@ func _basic_dash(move_dir: Vector2):
 	CAN_DASH = true
 
 
-
-# Handles ability 1 base case (overridden by child scene for full functionality)
+### Ability base cases (overridden by child scene for full functionality) ###
+# Handles ability 1 base
 func _A1() -> void:
 	print('yarr')
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A1 = true
 
-# Handles ability 2 base case (overridden by child scene for full functionality)
+# Handles ability 2 base
 func _A2() -> void:
 	print('matey')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
 
-# Handles ult base case (overridden by child scene for full functionality)
+# Handles ult base
 func _ultimate() -> void:
 	print('RAHHH')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout

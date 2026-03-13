@@ -8,7 +8,6 @@ func _ready() -> void:
 	super._ready()
 
 func _process(delta: float) -> void:
-	super._physics_process(delta)
 	self.move_dir = get_real_velocity().normalized()
 
 

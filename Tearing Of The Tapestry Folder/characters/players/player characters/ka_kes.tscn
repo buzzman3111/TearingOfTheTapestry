@@ -24,6 +24,8 @@ region_enabled = true
 region_rect = Rect2(5, 4, 22, 26)
 
 [node name="PlayerStats" parent="." index="1" unique_id=2105738643]
+SPEED = 400.0
+ATTACK_COOLDOWN = 0.5
 PROJECTILE_RANGE = 2000.0
 PROJECTILE_SPEED = 2500.0
 
