@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dvoknyentl3x2"]
 
-[ext_resource type="Script" uid="uid://b7rlrmxxhmwng" path="res://characters/attacks/ynos_projectile.gd" id="1_0xxol"]
+[ext_resource type="Script" uid="uid://dhih3vqilq8qn" path="res://characters/attacks/projectiles/ynos_projectile.gd" id="1_0xxol"]
 [ext_resource type="Texture2D" uid="uid://d14dk58ivj0py" path="res://assets/art/YnosOnosProjectile.png" id="2_2b8mu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xxol"]
-size = Vector2(50, 113)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sje8v"]
+size = Vector2(44, 95)
 
 [node name="YnosProjectile" type="Node2D" unique_id=322164887]
 script = ExtResource("1_0xxol")
@@ -12,11 +12,13 @@ script = ExtResource("1_0xxol")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=735508211]
 scale = Vector2(10, 10)
 texture = ExtResource("2_2b8mu")
+offset = Vector2(0, -4)
 region_enabled = true
 region_rect = Rect2(24, 10, 4, 10)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=257295006]
+position = Vector2(0, -46)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2027348630]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1264478769]
 position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_0xxol")
+shape = SubResource("RectangleShape2D_sje8v")

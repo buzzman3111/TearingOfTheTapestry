@@ -18,6 +18,7 @@ func _process(delta: float) -> void:
 	
 	pass
 
+
 func _expire() -> void:
 	await get_tree().create_timer(self.DURATION).timeout
 	self.queue_free()

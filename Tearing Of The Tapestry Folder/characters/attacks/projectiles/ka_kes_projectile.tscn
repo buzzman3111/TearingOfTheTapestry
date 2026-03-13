@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c2yee03yowc14"]
+
+[ext_resource type="Script" uid="uid://dtj3b3xcglyt1" path="res://characters/attacks/projectiles/ka_kes_projectile.gd" id="1_1nbma"]
+[ext_resource type="Texture2D" uid="uid://xa6q3unn0cno" path="res://assets/art/KaKesProjectile.png" id="1_20uu5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_20uu5"]
+size = Vector2(54, 304)
+
+[node name="KaKesProjectile" type="Node2D" unique_id=1576491874]
+script = ExtResource("1_1nbma")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=377831295]
+rotation = 1.5707964
+scale = Vector2(10, 10)
+texture = ExtResource("1_20uu5")
+offset = Vector2(-15, 0)
+region_enabled = true
+region_rect = Rect2(1, 13, 30, 5)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=602105956]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1229012538]
+position = Vector2(0, -150)
+shape = SubResource("RectangleShape2D_20uu5")

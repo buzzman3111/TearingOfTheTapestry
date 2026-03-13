@@ -16,6 +16,6 @@ func _A2() -> void:
 	CAN_A2 = true
 
 func _ultimate() -> void:
-	print('RAHHH')
+	print('Ynos Ult')
 	await get_tree().create_timer(STATS.ULT_COOLDOWN).timeout
 	CAN_ULT = true
