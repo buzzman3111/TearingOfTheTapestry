@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://beay1s1u2i4ak"]
+
+[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_aq6j0"]
+[ext_resource type="Texture2D" uid="uid://b15t6ilbmdxc2" path="res://assets/art/KaKes.png" id="2_sxs0j"]
+[ext_resource type="Script" uid="uid://bfrtfr1susur8" path="res://characters/players/player characters/ka_kes.gd" id="2_uey06"]
+[ext_resource type="PackedScene" uid="uid://c2yee03yowc14" path="res://characters/attacks/projectiles/ka_kes_projectile.tscn" id="3_yeg8e"]
+[ext_resource type="PackedScene" uid="uid://cv33it1speaiu" path="res://characters/attacks/melee/test_melee.tscn" id="5_x8mwe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxs0j"]
+radius = 25.0
+height = 90.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yeg8e"]
+radius = 30.0
+height = 100.0
+
+[node name="KaKes" unique_id=961990300 instance=ExtResource("1_aq6j0")]
+script = ExtResource("2_uey06")
+
+[node name="PlayerSprite" parent="." index="0" unique_id=566503953]
+texture = ExtResource("2_sxs0j")
+offset = Vector2(-1.5, 1)
+region_enabled = true
+region_rect = Rect2(5, 4, 22, 26)
+
+[node name="PlayerStats" parent="." index="1" unique_id=2105738643]
+PROJECTILE_RANGE = 2000.0
+PROJECTILE_SPEED = 2500.0
+
+[node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
+projectile_scenes = Array[PackedScene]([ExtResource("3_yeg8e")])
+melee_scenes = Array[PackedScene]([ExtResource("5_x8mwe")])
+
+[node name="EnvironmentCollision" parent="." index="4" unique_id=1460140901]
+shape = SubResource("CapsuleShape2D_sxs0j")
+
+[node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
+shape = SubResource("CapsuleShape2D_yeg8e")

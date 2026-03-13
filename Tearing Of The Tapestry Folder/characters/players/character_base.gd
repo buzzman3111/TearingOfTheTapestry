@@ -7,14 +7,12 @@ extends CharacterBody2D
 @export var player_index = 0
 
 @onready var projectile_spawner: ProjectileSpawner = $ProjectileSpawner
-@onready var melee_spawner: MeleeSpawner = $MeleeSpawner
 
 @onready var player_sprite: Sprite2D = $PlayerSprite
 @onready var STATS: Node = $PlayerStats
 @onready var aim_node: Node2D = $Aim
 
 #@onready var InputMapper: Resource = ResourceLoader.load("res://input_mapper.gd")
-
 
 const DEADZONE = 0.5
 const DASH_DECAY = 2000
@@ -116,10 +114,10 @@ func _attack():
 	CAN_ATTACK = true
 
 func _basic_ranged_attack():
-	projectile_spawner._fire(0)
+	projectile_spawner._fire_projectile(0)
 
 func _basic_melee_attack():
-	melee_spawner._slash(0)
+	projectile_spawner._fire_melee(0)
 
 
 # Handles basic dashes
@@ -142,5 +140,8 @@ func _A2() -> void:
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
 
+# Handles ult base case (overridden by child scene for full functionality)
 func _ultimate() -> void:
-	pass
+	print('RAHHH')
+	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
+	CAN_A2 = true
