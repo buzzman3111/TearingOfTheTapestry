@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bivcm6noga6be"]
+
+[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_dqnst"]
+[ext_resource type="Script" uid="uid://bw8q30btmj3g7" path="res://characters/players/ynos_onos.gd" id="2_35v2c"]
+[ext_resource type="Texture2D" uid="uid://1lyxv6qbf23i" path="res://assets/art/YnosOnos.png" id="2_dqnst"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqnst"]
+radius = 25.0
+height = 90.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_35v2c"]
+radius = 30.0
+height = 100.0
+
+[node name="YnosOnos" unique_id=961990300 instance=ExtResource("1_dqnst")]
+script = ExtResource("2_35v2c")
+
+[node name="PlayerSprite" parent="." index="0" unique_id=566503953]
+texture = ExtResource("2_dqnst")
+
+[node name="CollisionShape2D" parent="." index="5" unique_id=1460140901]
+shape = SubResource("CapsuleShape2D_dqnst")
+debug_color = Color(0.58431375, 0, 0.003921569, 0.19607843)
+
+[node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
+shape = SubResource("CapsuleShape2D_35v2c")
+debug_color = Color(0, 0.6, 0.7019608, 0.41960785)

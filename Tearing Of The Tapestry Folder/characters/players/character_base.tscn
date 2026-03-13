@@ -1,37 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://ds3atix62n2qk"]
+[gd_scene format=3 uid="uid://ds3atix62n2qk"]
 
 [ext_resource type="Script" uid="uid://cdqu56mc0se1m" path="res://characters/players/character_base.gd" id="1_kx71l"]
-[ext_resource type="Texture2D" uid="uid://c23jx5sde2wm5" path="res://assets/art/ynosOnosPixel.png" id="2_jq2ol"]
 [ext_resource type="Script" uid="uid://ccg5sfcw5xh5y" path="res://characters/players/player_stats.gd" id="3_2s7vm"]
-[ext_resource type="Texture2D" uid="uid://d14dk58ivj0py" path="res://assets/art/YnosOnosProjectile.png" id="3_jq2ol"]
-[ext_resource type="Script" uid="uid://cnln4jjtav5hq" path="res://characters/players/projectile_spawner.gd" id="5_2xxqu"]
-[ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/projectile.tscn" id="6_pkrb3"]
+[ext_resource type="Script" uid="uid://cnln4jjtav5hq" path="res://characters/attacks/projectile_spawner.gd" id="5_2xxqu"]
+[ext_resource type="Script" uid="uid://b3p3ge0kdi5g4" path="res://characters/attacks/melee_spawner.gd" id="6_6uvm8"]
+[ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/ynos_projectile.tscn" id="6_pkrb3"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jq2ol"]
-radius = 30.0
-height = 98.0
-
-[node name="CharacterBase" type="CharacterBody2D"]
+[node name="CharacterBase" type="CharacterBody2D" unique_id=961990300]
 script = ExtResource("1_kx71l")
 
-[node name="PlayerSprite" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=566503953]
 scale = Vector2(5, 5)
-texture = ExtResource("2_jq2ol")
 offset = Vector2(0, -1)
 region_enabled = true
 region_rect = Rect2(9, 4, 12, 26)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_jq2ol")
-
-[node name="PlayerStats" type="Node" parent="."]
+[node name="PlayerStats" type="Node" parent="." unique_id=2105738643]
 script = ExtResource("3_2s7vm")
+ATTACK_COOLDOWN = 0.75
+PROJECTILE_RANGE = 750.0
 
-[node name="ProjectileSpawner" type="Node" parent="." node_paths=PackedStringArray("player_stats", "aim")]
+[node name="ProjectileSpawner" type="Node" parent="." unique_id=1973227358 node_paths=PackedStringArray("player_stats", "aim")]
 script = ExtResource("5_2xxqu")
-projectile_scene = ExtResource("6_pkrb3")
-projectile_sprite = ExtResource("3_jq2ol")
+projectile_scene = Array[PackedScene]([ExtResource("6_pkrb3")])
 player_stats = NodePath("../PlayerStats")
 aim = NodePath("../Aim")
 
-[node name="Aim" type="Node2D" parent="."]
+[node name="MeleeSpawner" type="Node" parent="." unique_id=469505800]
+script = ExtResource("6_6uvm8")
+
+[node name="Aim" type="Node2D" parent="." unique_id=1831282424]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1460140901]
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=269890551]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox" unique_id=345707070]
+debug_color = Color(1, 0, 0.016666412, 0.41960785)

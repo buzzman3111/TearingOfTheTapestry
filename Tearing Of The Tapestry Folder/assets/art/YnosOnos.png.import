@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c23jx5sde2wm5"
-path="res://.godot/imported/ynosOnosPixel.png-8c8785b57b42684d64614d0ff5f3a363.ctex"
+uid="uid://1lyxv6qbf23i"
+path="res://.godot/imported/YnosOnos.png-77fe0a58118877b6ea50c5963801b4d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/ynosOnosPixel.png"
-dest_files=["res://.godot/imported/ynosOnosPixel.png-8c8785b57b42684d64614d0ff5f3a363.ctex"]
+source_file="res://assets/art/YnosOnos.png"
+dest_files=["res://.godot/imported/YnosOnos.png-77fe0a58118877b6ea50c5963801b4d9.ctex"]
 
 [params]
 
