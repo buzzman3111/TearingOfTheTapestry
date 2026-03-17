@@ -11,6 +11,7 @@ extends Node
 
 const DURATION: float = 0.1
 
+
 # Creates and adds to scene the melee attack at index 
 func _fire_melee(melee_index: int, direction: float = aim.rotation) -> void:
 	var melee = melee_scenes[melee_index].instantiate()
@@ -20,6 +21,7 @@ func _fire_melee(melee_index: int, direction: float = aim.rotation) -> void:
 	melee.rotation = direction
 	
 	self.add_child(melee)
+
 
 # Creates and adds to scene the projectile at index ability_index
 func _fire_projectile(projectile_index: int) -> void:
