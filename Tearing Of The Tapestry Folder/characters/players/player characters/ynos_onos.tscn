@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bivcm6noga6be"]
+
+[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_dqnst"]
+[ext_resource type="Script" uid="uid://bw8q30btmj3g7" path="res://characters/players/player characters/ynos_onos.gd" id="2_35v2c"]
+[ext_resource type="Texture2D" uid="uid://1lyxv6qbf23i" path="res://assets/art/YnosOnos.png" id="2_dqnst"]
+[ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/projectiles/ynos_projectile.tscn" id="4_s5ebq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqnst"]
+radius = 25.0
+height = 90.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_35v2c"]
+radius = 30.0
+height = 100.0
+
+[node name="YnosOnos" unique_id=961990300 instance=ExtResource("1_dqnst")]
+script = ExtResource("2_35v2c")
+
+[node name="PlayerSprite" parent="." index="0" unique_id=566503953]
+texture = ExtResource("2_dqnst")
+offset = Vector2(0, -1)
+region_rect = Rect2(9, 4, 11, 26)
+
+[node name="PlayerStats" parent="." index="1" unique_id=2105738643]
+SPEED = 400.0
+
+[node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
+projectile_scenes = Array[PackedScene]([ExtResource("4_s5ebq")])
+
+[node name="EnvironmentCollision" parent="." index="4" unique_id=1460140901]
+shape = SubResource("CapsuleShape2D_dqnst")
+
+[node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
+shape = SubResource("CapsuleShape2D_35v2c")
