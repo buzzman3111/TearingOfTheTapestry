@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dldiffxpynxii"]
+
+[ext_resource type="Script" uid="uid://cy04vm3bn5asa" path="res://characters/attacks/melee/kevexian_melee.gd" id="1_74t1r"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_74t1r"]
+
+[node name="KevexianMelee" type="Node2D" unique_id=476710053]
+script = ExtResource("1_74t1r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=779083884]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1058990567]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1419462481]
+material = SubResource("CanvasItemMaterial_74t1r")
+polygon = PackedVector2Array(0, 0, 400, -150, 400, 150)

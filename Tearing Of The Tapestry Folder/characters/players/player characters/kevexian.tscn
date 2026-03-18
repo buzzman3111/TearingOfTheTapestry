@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cqmhrfbc8ssyl"]
+
+[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_35dhj"]
+[ext_resource type="Script" uid="uid://dxkomiqrjuyp0" path="res://characters/players/player characters/kevexian.gd" id="2_serf6"]
+[ext_resource type="Texture2D" uid="uid://cndohc5iv63sk" path="res://assets/art/Kevexian.png" id="2_ytjdu"]
+[ext_resource type="PackedScene" uid="uid://dldiffxpynxii" path="res://characters/attacks/melee/kevexian_melee.tscn" id="4_serf6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ytjdu"]
+radius = 38.0
+height = 140.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_keu1b"]
+radius = 38.0
+height = 140.0
+
+[node name="Kevexian" unique_id=961990300 instance=ExtResource("1_35dhj")]
+script = ExtResource("2_serf6")
+
+[node name="PlayerSprite" parent="." index="0" unique_id=566503953]
+texture = ExtResource("2_ytjdu")
+
+[node name="PlayerStats" parent="." index="1" unique_id=2105738643]
+ATTACK = 1
+
+[node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
+melee_scenes = Array[PackedScene]([ExtResource("4_serf6")])
+
+[node name="EnvironmentCollision" parent="." index="4" unique_id=1460140901]
+shape = SubResource("CapsuleShape2D_ytjdu")
+
+[node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
+shape = SubResource("CapsuleShape2D_keu1b")
