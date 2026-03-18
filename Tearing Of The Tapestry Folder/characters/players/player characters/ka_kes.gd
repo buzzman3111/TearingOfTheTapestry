@@ -12,8 +12,8 @@ var CAN_BACKSTAB := false
 func _ready() -> void:
 	super._ready()
 
-func _process(delta: float) -> void:
-	self.move_dir = get_real_velocity().normalized()
+#func _process(delta: float) -> void:
+	#pass
 
 
 func _A1() -> void:
