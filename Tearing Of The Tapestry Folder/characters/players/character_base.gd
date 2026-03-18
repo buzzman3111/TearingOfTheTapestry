@@ -9,7 +9,7 @@ extends CharacterBody2D
 @onready var projectile_spawner: ProjectileSpawner = $ProjectileSpawner
 
 @onready var player_sprite: Sprite2D = $PlayerSprite
-@onready var STATS: Node = $PlayerStats
+@export var STATS: Stats
 @onready var aim_node: Node2D = $Aim
 
 #@onready var InputMapper: Resource = ResourceLoader.load("res://input_mapper.gd")
@@ -23,6 +23,8 @@ var CAN_A1 = true
 var CAN_A2 = true
 var CAN_ULT = true
 
+var TARGETABLE = true
+
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
 
@@ -32,7 +34,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Movement
+	### Movement
 	# Gets the direction of the left joystick
 	var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
 	var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
@@ -56,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
-	# Attacks
+	### Attacks
 	var aim_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_X)
 	var aim_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_Y)
 	var aim_dir = Vector2(aim_dir_x, aim_dir_y)
@@ -69,12 +71,12 @@ func _physics_process(delta: float) -> void:
 		_attack()
 	
 	
-	# Abilities
-	if Input.is_joy_button_pressed(player_index, JOY_BUTTON_X) and CAN_A1:
+	### Abilities
+	if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_X) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_LEFT_SHOULDER)) and CAN_A1:
 		CAN_A1 = false
 		_A1()
 	
-	if Input.is_joy_button_pressed(player_index, JOY_BUTTON_B) and CAN_A2:
+	if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_B) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_RIGHT_SHOULDER)) and CAN_A2:
 		CAN_A2 = false
 		_A2()
 	
@@ -83,7 +85,7 @@ func _physics_process(delta: float) -> void:
 		_ultimate()
 	
 	
-	# Rudementary sprite logic
+	### Rudementary sprite logic
 	if CAN_ATTACK:
 		if move_dir_x > 0:
 			player_sprite.flip_h = false
@@ -94,6 +96,10 @@ func _physics_process(delta: float) -> void:
 			player_sprite.flip_h = false
 		elif aim_dir_x < 0:
 			player_sprite.flip_h = true
+	
+	### HP
+	if STATS.HP <= 0:
+		self._die()
 
 
 func _dash(move_dir):
@@ -114,10 +120,10 @@ func _attack():
 	CAN_ATTACK = true
 
 func _basic_ranged_attack():
-	projectile_spawner._fire_projectile(0)
+	projectile_spawner._fire_projectile(self, 0)
 
 func _basic_melee_attack():
-	projectile_spawner._fire_melee(0)
+	projectile_spawner._fire_melee(self, 0)
 
 
 # Handles basic dashes
@@ -145,3 +151,11 @@ func _ultimate() -> void:
 	print('RAHHH')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
+
+
+func _damage(amount: int) -> void:
+	STATS.HP -= amount
+
+func _die() -> void:
+	print('you are dead')
+	self.queue_free()

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cjawx7g3iihfd"]
+
+[ext_resource type="PackedScene" uid="uid://bivcm6noga6be" path="res://characters/players/player characters/ynos_onos.tscn" id="1_rhnn0"]
+[ext_resource type="PackedScene" uid="uid://beay1s1u2i4ak" path="res://characters/players/player characters/ka_kes.tscn" id="2_rhnn0"]
+
+[node name="TestScene" type="Node2D" unique_id=433689384]
+
+[node name="KaKes" parent="." unique_id=961990300 instance=ExtResource("2_rhnn0")]
+position = Vector2(425, 283)
+
+[node name="YnosOnos" parent="." unique_id=29909501 instance=ExtResource("1_rhnn0")]
+position = Vector2(807, 283)
+player_index = 1

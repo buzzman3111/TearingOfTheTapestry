@@ -18,6 +18,10 @@ config/name="TearingOfTheTapestryFolder"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/art/icon.svg"
 
+[global_group]
+
+character=""
+
 [input]
 
 up={
@@ -121,6 +125,12 @@ aim_right={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="players"
+2d_physics/layer_2="enemies"
+2d_physics/layer_3="environment"
 
 [rendering]
 

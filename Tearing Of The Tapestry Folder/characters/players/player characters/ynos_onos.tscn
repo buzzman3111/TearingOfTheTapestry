@@ -13,16 +13,18 @@ height = 90.0
 radius = 30.0
 height = 100.0
 
-[node name="YnosOnos" unique_id=961990300 instance=ExtResource("1_dqnst")]
+[node name="YnosOnos" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_dqnst")]
 script = ExtResource("2_35v2c")
+STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
 texture = ExtResource("2_dqnst")
 offset = Vector2(0, -1)
+region_enabled = true
 region_rect = Rect2(9, 4, 11, 26)
 
 [node name="PlayerStats" parent="." index="1" unique_id=2105738643]
-SPEED = 400.0
+ATTACK = 0
 
 [node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
 projectile_scenes = Array[PackedScene]([ExtResource("4_s5ebq")])
