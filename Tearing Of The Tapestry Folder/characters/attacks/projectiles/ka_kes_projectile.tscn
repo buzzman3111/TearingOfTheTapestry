@@ -17,8 +17,10 @@ offset = Vector2(-15, 0)
 region_enabled = true
 region_rect = Rect2(1, 13, 30, 5)
 
-[node name="Area2D" type="Area2D" parent="." unique_id=602105956]
+[node name="Hitbox" type="Area2D" parent="." unique_id=602105956]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1229012538]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1229012538]
 position = Vector2(0, -150)
 shape = SubResource("RectangleShape2D_20uu5")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

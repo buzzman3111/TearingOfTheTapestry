@@ -13,34 +13,45 @@ const DURATION: float = 0.1
 
 
 # Creates and adds to scene the melee attack at index 
-func _fire_melee(melee_index: int, direction: float = aim.rotation) -> void:
+func _fire_melee(owner: Node2D,
+	melee_index: int, 
+	damage: int = player_stats.PROJECTILE_DAMAGE,
+	rotation: float = aim.rotation) -> void:
+	
 	var melee = melee_scenes[melee_index].instantiate()
 	
 	melee.global_position = aim.global_position
 	melee.DURATION = DURATION
-	melee.rotation = direction
+	melee.rotation = rotation
+	melee.OWNER = owner
+	melee.DAMAGE = damage
 	
 	self.add_child(melee)
 
 
 # Creates and adds to scene the projectile at index ability_index
-func _fire_projectile(projectile_index: int) -> void:
+func _fire_projectile(owner: Node2D,
+	projectile_index: int, 
+	damage: int = player_stats.PROJECTILE_DAMAGE,
+	rotation: float = aim.rotation) -> void:
 	var projectile = projectile_scenes[projectile_index].instantiate()
 	
 	projectile.global_position = aim.global_position
 	projectile.RANGE = player_stats.PROJECTILE_RANGE
 	projectile.SPEED = player_stats.PROJECTILE_SPEED
+	projectile.DAMAGE = damage
+	projectile.OWNER = owner
 	
-	var move_dir = _get_move_dir()
-	_apply_dir_rot(projectile, move_dir, aim.rotation)
+	var move_dir = _get_dir(rotation)
+	_apply_dir_rot(projectile, move_dir, rotation)
 	
 	self.add_child(projectile)
 
 
 # Transforms angle into vector direction
-func _get_move_dir() -> Vector2:
-	var x = cos(aim.rotation)
-	var y = sin(aim.rotation)
+func _get_dir(rotation: float) -> Vector2:
+	var x = cos(rotation)
+	var y = sin(rotation)
 	return Vector2(x,y)
 
 # Sets projectile movement direction and rotation

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://hxwimwg6eeuv"]
+
+[ext_resource type="Texture2D" uid="uid://ujeywgh5g3uj" path="res://assets/art/barrel.png" id="1_4i7m7"]
+[ext_resource type="Script" uid="uid://cdqu56mc0se1m" path="res://characters/players/character_base.gd" id="1_7a6a2"]
+[ext_resource type="Script" uid="uid://ccg5sfcw5xh5y" path="res://characters/players/player_stats.gd" id="2_ejxyx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra0cx"]
+radius = 45.0
+height = 132.0
+
+[node name="DummyEnemy" type="CharacterBody2D" unique_id=1128807831 node_paths=PackedStringArray("STATS") groups=["character"]]
+collision_mask = 4
+script = ExtResource("1_7a6a2")
+STATS = NodePath("Stats")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1639642254]
+scale = Vector2(10, 10)
+texture = ExtResource("1_4i7m7")
+region_enabled = true
+region_rect = Rect2(11, 10, 9, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1793949402]
+shape = SubResource("CapsuleShape2D_ra0cx")
+
+[node name="Stats" type="Node" parent="." unique_id=16460065]
+script = ExtResource("2_ejxyx")
+HP = 10
+SPEED = 0.0
+DASH_SPEED = 0.0
+DASH_COOLDOWN = 0.0
+ATTACK_COOLDOWN = 0.0
+PROJECTILE_RANGE = 0.0
+PROJECTILE_SPEED = 0.0
+PROJECTILE_DAMAGE = 0.0
+A1_COOLDOWN = 0.0
+A2_COOLDOWN = 0.0
+ULT_COOLDOWN = 0.0

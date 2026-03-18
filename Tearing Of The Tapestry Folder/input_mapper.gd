@@ -18,8 +18,8 @@ const navigate_down = 12	# D-pad down
 const navigate_left = 13	# D-pad left
 const navigate_right = 14	# D-pad right
 
-const select_menu = 0 	# Redundant but menu specific
-const navigate_back = 1	# Redundant but menu specific
+const select_menu = 0 		# Redundant but menu specific
+const navigate_back = 1		# Redundant but menu specific
 
 
 # Joy Axis
