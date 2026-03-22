@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bivcm6noga6be"]
 
-[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_dqnst"]
+[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_dqnst"]
 [ext_resource type="Script" uid="uid://bw8q30btmj3g7" path="res://characters/players/player characters/ynos_onos.gd" id="2_35v2c"]
 [ext_resource type="Texture2D" uid="uid://1lyxv6qbf23i" path="res://assets/art/YnosOnos.png" id="2_dqnst"]
 [ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/projectiles/ynos_projectile.tscn" id="4_s5ebq"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://beay1s1u2i4ak"]
 
-[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/character_base.tscn" id="1_aq6j0"]
+[ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_aq6j0"]
 [ext_resource type="Texture2D" uid="uid://b15t6ilbmdxc2" path="res://assets/art/KaKes.png" id="2_sxs0j"]
 [ext_resource type="Script" uid="uid://bfrtfr1susur8" path="res://characters/players/player characters/ka_kes.gd" id="2_uey06"]
 [ext_resource type="PackedScene" uid="uid://c2yee03yowc14" path="res://characters/attacks/projectiles/ka_kes_projectile.tscn" id="3_yeg8e"]
