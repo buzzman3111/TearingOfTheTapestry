@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ds3atix62n2qk"]
 
-[ext_resource type="Script" uid="uid://cdqu56mc0se1m" path="res://characters/players/character_base.gd" id="1_kx71l"]
+[ext_resource type="Script" uid="uid://cdqu56mc0se1m" path="res://characters/players/player_base.gd" id="1_kx71l"]
 [ext_resource type="Script" uid="uid://ccg5sfcw5xh5y" path="res://characters/players/player_stats.gd" id="3_2s7vm"]
 [ext_resource type="Script" uid="uid://cnln4jjtav5hq" path="res://characters/attacks/projectiles/projectile_spawner.gd" id="5_2xxqu"]
 
-[node name="CharacterBase" type="CharacterBody2D" unique_id=961990300]
+[node name="PlayerBase" type="CharacterBody2D" unique_id=961990300]
 collision_mask = 4
 script = ExtResource("1_kx71l")
 
