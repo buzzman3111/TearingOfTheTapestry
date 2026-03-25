@@ -13,7 +13,7 @@ const DURATION: float = 0.1
 
 
 # Creates and adds to scene the melee attack at index 
-func _fire_melee(owner: Node2D,
+func _fire_melee(projectile_owner: Node2D,
 	melee_index: int, 
 	damage: int = player_stats.PROJECTILE_DAMAGE,
 	rotation: float = aim.rotation) -> void:
@@ -30,7 +30,7 @@ func _fire_melee(owner: Node2D,
 
 
 # Creates and adds to scene the projectile at index ability_index
-func _fire_projectile(owner: Node2D,
+func _fire_projectile(projectile_owner: Node2D,
 	projectile_index: int, 
 	damage: int = player_stats.PROJECTILE_DAMAGE,
 	rotation: float = aim.rotation) -> void:

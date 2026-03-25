@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://mi443idl8dkh"]
+
+[ext_resource type="PackedScene" uid="uid://cv33it1speaiu" path="res://characters/attacks/melee/melee_base.tscn" id="1_wmq17"]
+
+[node name="KaKesUlt2" unique_id=476710053 instance=ExtResource("1_wmq17")]
+
+[node name="CollisionPolygon2D" parent="Hitbox" parent_id_path=PackedInt32Array(1058990567) index="0" unique_id=1419462481]
+polygon = PackedVector2Array(25, -150, 150, -160, 275, -100, 300, 0, 275, 100, 150, 160, 25, 150, -125, 125, 100, 0, -125, -125)
