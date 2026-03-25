@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cv33it1speaiu"]
+
+[ext_resource type="Script" uid="uid://bgnh023sn1t8c" path="res://characters/attacks/melee/melee_base.gd" id="1_khum6"]
+
+[node name="TestMelee" type="Node2D" unique_id=476710053]
+script = ExtResource("1_khum6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=779083884]
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1058990567]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" unique_id=1419462481]
+polygon = PackedVector2Array(0, 0, 400, -150, 400, 150)
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

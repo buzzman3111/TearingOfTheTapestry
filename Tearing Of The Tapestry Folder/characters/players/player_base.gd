@@ -6,8 +6,7 @@ extends CharacterBody2D
 
 @export var player_index = 0
 
-enum CONTROL {controller, keyboard}
-@export var control_scheme = CONTROL.controller
+@export var using_controller = true # Debug for keyboard/mouse so I can test w/out controller
 
 @onready var projectile_spawner: ProjectileSpawner = $ProjectileSpawner
 
@@ -43,82 +42,80 @@ func _physics_process(delta: float) -> void:
 	
 	
 	## Controller
-	match control_scheme:
-		CONTROL.controller:
-			# Gets the direction of the left joystick
-			var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
-			var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
-			move_dir = Vector2(move_dir_x, move_dir_y)
-			if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
-				move_dir = Vector2.ZERO
-			base_vel = move_dir * STATS.SPEED
-			
-			
-			# If we can dash and we press dash, we dash
-			if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_A)
-			or (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_LEFT) > 0)) and CAN_DASH:
-				CAN_DASH = false
-				_dash(move_dir)
-			
-			
-			### Attacks
-			var aim_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_X)
-			var aim_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_Y)
-			aim_dir = Vector2(aim_dir_x, aim_dir_y)
-			if aim_dir.length() > DEADZONE: # This check adds some deadzone to the joystick
-				aim_node.rotation = aim_dir.angle()
-			
-			# If we click the attcak button and can attack, we attack
-			if (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_RIGHT)) and CAN_ATTACK:
-				CAN_ATTACK = false
-				_attack()
-			
-			
-			### Abilities
-			if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_X) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_LEFT_SHOULDER)) and CAN_A1:
-				CAN_A1 = false
-				_A1()
-			
-			if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_B) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_RIGHT_SHOULDER)) and CAN_A2:
-				CAN_A2 = false
-				_A2()
-			
-			if Input.is_joy_button_pressed(player_index, JOY_BUTTON_Y) and CAN_ULT:
-				CAN_ULT = false
-				_ultimate()
+	if using_controller: # Controller inputs
+		# Gets the direction of the left joystick
+		var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
+		var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
+		move_dir = Vector2(move_dir_x, move_dir_y)
+		if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
+			move_dir = Vector2.ZERO
+		base_vel = move_dir * STATS.SPEED
 		
 		
-		CONTROL.keyboard:
-			# Movement
-			var move_dir_x = Input.get_axis('left', 'right')
-			var move_dir_y = Input.get_axis('up', 'down')
-			move_dir = Vector2(move_dir_x, move_dir_y)
-			base_vel = move_dir * STATS.SPEED
-			
-			if Input.is_action_just_pressed('dash') and CAN_DASH:
-				CAN_DASH = false
-				_dash(move_dir)
-			
-			
-			### Attacks
-			aim_dir = get_local_mouse_position()
+		# If we can dash and we press dash, we dash
+		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_A)
+		or (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_LEFT) > 0)) and CAN_DASH:
+			CAN_DASH = false
+			_dash(move_dir)
+		
+		
+		### Attacks
+		var aim_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_X)
+		var aim_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_Y)
+		aim_dir = Vector2(aim_dir_x, aim_dir_y)
+		if aim_dir.length() > DEADZONE: # This check adds some deadzone to the joystick
 			aim_node.rotation = aim_dir.angle()
-			
-			if Input.is_action_just_pressed('attack') and CAN_ATTACK:
-				CAN_ATTACK = false
-				_attack()
-			
-			if Input.is_action_just_pressed("ability 1") and CAN_A1:
-				CAN_A1 = false
-				_A1()
-			
-			if Input.is_action_just_pressed("ability 2") and CAN_A2:
-				CAN_A2 = false
-				_A2()
-			
-			if Input.is_action_just_pressed('ultimate') and CAN_ULT:
-				CAN_ULT = false
-				_ultimate()
+		
+		# If we click the attcak button and can attack, we attack
+		if (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_RIGHT)) and CAN_ATTACK:
+			CAN_ATTACK = false
+			_attack()
+		
+		
+		### Abilities
+		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_X) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_LEFT_SHOULDER)) and CAN_A1:
+			CAN_A1 = false
+			_A1()
+		
+		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_B) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_RIGHT_SHOULDER)) and CAN_A2:
+			CAN_A2 = false
+			_A2()
+		
+		if Input.is_joy_button_pressed(player_index, JOY_BUTTON_Y) and CAN_ULT:
+			CAN_ULT = false
+			_ultimate()
+	
+	else: # Keyboard/mouse inputs (TEMPORARY, NOT POSSIBLE WITH CONTROLLER)
+		# Movement
+		var move_dir_x = Input.get_axis('left', 'right')
+		var move_dir_y = Input.get_axis('up', 'down')
+		move_dir = Vector2(move_dir_x, move_dir_y)
+		base_vel = move_dir * STATS.SPEED
+		
+		if Input.is_action_just_pressed('dash') and CAN_DASH:
+			CAN_DASH = false
+			_dash(move_dir)
+		
+		
+		### Attacks
+		aim_dir = get_local_mouse_position()
+		aim_node.rotation = aim_dir.angle()
+		
+		if Input.is_action_just_pressed('attack') and CAN_ATTACK:
+			CAN_ATTACK = false
+			_attack()
+		
+		if Input.is_action_just_pressed("ability 1") and CAN_A1:
+			CAN_A1 = false
+			_A1()
+		
+		if Input.is_action_just_pressed("ability 2") and CAN_A2:
+			CAN_A2 = false
+			_A2()
+		
+		if Input.is_action_just_pressed('ultimate') and CAN_ULT:
+			CAN_ULT = false
+			_ultimate()
 	
 	
 	# The dash velocity repidly decays over time
@@ -138,10 +135,6 @@ func _physics_process(delta: float) -> void:
 			player_sprite.flip_h = false
 		elif aim_dir.x < 0:
 			player_sprite.flip_h = true
-	
-	### HP
-	if STATS.HP <= 0:
-		self._die()
 
 
 func _dash(move_dir: Vector2):
@@ -192,6 +185,9 @@ func _ultimate() -> void:
 
 func _damage(amount: int) -> void:
 	STATS.HP -= amount
+	print('took ', amount, ' damage. HP=', STATS.HP)
+	if STATS.HP <= 0:
+		self._die()
 
 func _die() -> void:
 	print('you are dead')
