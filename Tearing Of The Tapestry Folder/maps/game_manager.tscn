@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dq7ejf3t5avt4"]
+
+[ext_resource type="Script" uid="uid://8y7dwhma070q" path="res://maps/game_manager.gd" id="1_nm7hl"]
+
+[node name="GameManager" type="Node" unique_id=1077713356]
+script = ExtResource("1_nm7hl")
+
+[node name="DamageTick" type="Timer" parent="." unique_id=1123880290]
+autostart = true
+
+[connection signal="timeout" from="DamageTick" to="." method="_on_damage_tick_timeout"]

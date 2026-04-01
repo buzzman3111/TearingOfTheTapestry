@@ -2,7 +2,7 @@ class_name PlayerBase
 extends CharacterBody2D
 
 # The base code that EACH player will have. Player characters should inherit from 
-# 	this class and define their own functions for thier unique actions
+# 	this class and overwrite their own functions for thier unique actions
 
 @export var player_index = 0
 
@@ -24,8 +24,6 @@ var CAN_DASH = true
 var CAN_A1 = true
 var CAN_A2 = true
 var CAN_ULT = true
-
-var TARGETABLE = true
 
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
@@ -69,23 +67,28 @@ func _physics_process(delta: float) -> void:
 		# If we click the attcak button and can attack, we attack
 		if (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_RIGHT)) and CAN_ATTACK:
 			CAN_ATTACK = false
-			_attack()
+			var BI_effect = _check_BI()[0]
+			_attack(BI_effect)
 		
 		
 		### Abilities
 		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_X) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_LEFT_SHOULDER)) and CAN_A1:
 			CAN_A1 = false
-			_A1()
+			var BI_effect = _check_BI()[0]
+			_A1(BI_effect)
 		
 		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_B) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_RIGHT_SHOULDER)) and CAN_A2:
 			CAN_A2 = false
-			_A2()
+			var BI_effect = _check_BI()[0]
+			_A2(BI_effect)
 		
 		if Input.is_joy_button_pressed(player_index, JOY_BUTTON_Y) and CAN_ULT:
 			CAN_ULT = false
-			_ultimate()
+			var BI_effect = _check_BI()[0]
+			_ultimate(BI_effect)
 	
-	else: # Keyboard/mouse inputs (TEMPORARY, NOT POSSIBLE WITH CONTROLLER)
+	# Keyboard/mouse inputs (TEMPORARY, NOT POSSIBLE WITH CONTROLLER)
+	else:
 		# Movement
 		var move_dir_x = Input.get_axis('left', 'right')
 		var move_dir_y = Input.get_axis('up', 'down')
@@ -103,19 +106,23 @@ func _physics_process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed('attack') and CAN_ATTACK:
 			CAN_ATTACK = false
-			_attack()
+			var BI_effect = _check_BI()[0]
+			_attack(BI_effect)
 		
 		if Input.is_action_just_pressed("ability 1") and CAN_A1:
 			CAN_A1 = false
-			_A1()
+			var BI_effect = _check_BI()[0]
+			_A1(BI_effect)
 		
 		if Input.is_action_just_pressed("ability 2") and CAN_A2:
 			CAN_A2 = false
-			_A2()
+			var BI_effect = _check_BI()[0]
+			_A2(BI_effect)
 		
 		if Input.is_action_just_pressed('ultimate') and CAN_ULT:
 			CAN_ULT = false
-			_ultimate()
+			var BI_effect = _check_BI()[0]
+			_ultimate(BI_effect)
 	
 	
 	# The dash velocity repidly decays over time
@@ -144,51 +151,73 @@ func _dash(move_dir: Vector2):
 
 
 # Chooses melee or ranged basic attack depending on character stats
-func _attack():
+func _attack(effect_strength: float = 1.0, effect_amount: int = 0):
 	var attack = STATS.ATTACK
 	
 	match attack:
 		STATS.attack_type.RANGED:
-			_basic_ranged_attack()
+			_basic_ranged_attack(effect_strength, effect_amount)
 		STATS.attack_type.MELEE:
-			_basic_melee_attack()
+			_basic_melee_attack(effect_strength, effect_amount)
 	
 	await get_tree().create_timer(STATS.ATTACK_COOLDOWN).timeout
 	CAN_ATTACK = true
 
-func _basic_ranged_attack():
-	projectile_spawner._fire_projectile(self, 0)
+func _basic_ranged_attack(effect_strength: float = 1.0, effect_amount: int = 0):
+	@warning_ignore("narrowing_conversion")
+	projectile_spawner._fire_projectile(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
 
-func _basic_melee_attack():
-	projectile_spawner._fire_melee(self, 0)
+func _basic_melee_attack(effect_strength: float = 1.0, effect_amount: int = 0):
+	@warning_ignore("narrowing_conversion")
+	projectile_spawner._fire_melee(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
 
 
 ### Ability base cases (overridden by child scene for full functionality) ###
 # Handles ability 1 base
-func _A1() -> void:
+func _A1(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
 	print('yarr')
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A1 = true
 
 # Handles ability 2 base
-func _A2() -> void:
+func _A2(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
 	print('matey')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
 
 # Handles ult base
-func _ultimate() -> void:
+func _ultimate(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
 	print('RAHHH')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
 
 
 func _damage(amount: int) -> void:
-	STATS.HP -= amount
-	print('took ', amount, ' damage. HP=', STATS.HP)
-	if STATS.HP <= 0:
-		self._die()
+	var barrier = self.find_child('Barrier')
+	if barrier:
+		print('nuh uh')
+		barrier.queue_free()
+	else:
+		STATS.HP -= amount
+		if STATS.HP > STATS.MAX_HP:
+			STATS.HP = STATS.MAX_HP
+		print('took ', amount, ' damage. HP=', STATS.HP)
+		if STATS.HP <= 0:
+			self._die()
+
 
 func _die() -> void:
 	print('you are dead')
 	self.queue_free()
+
+
+func _check_BI() -> Array:
+	var strength: float = 1.0
+	var amount: int = 0
+	var BI = self.find_child('BI')	# Bardic inspiration
+	if BI:
+		strength = BI.effect_strength
+		amount = BI.effect_amount
+		BI._on_effect_duration_timeout()
+	
+	return [strength, amount]

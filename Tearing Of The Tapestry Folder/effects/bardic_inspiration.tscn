@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://8qw6wqnd85m6"]
+
+[ext_resource type="PackedScene" uid="uid://duydghldf83c" path="res://effects/effect_base.tscn" id="1_wxg2f"]
+
+[node name="BI" unique_id=861128799 groups=["effects"] instance=ExtResource("1_wxg2f")]
+effect_duration = 3.0
+effect_strength = 1.5
+max_stacks = 3

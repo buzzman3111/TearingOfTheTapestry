@@ -3,7 +3,7 @@ extends Node2D
 
 var RANGE: float
 var SPEED: float
-var DAMAGE: int
+var DAMAGE: float
 var OWNER: Node2D
 
 var move_dir: Vector2
@@ -29,4 +29,4 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if (body.is_in_group('character')) and (body != OWNER):
 		print('hit: ', body)
 		print('owner: ', OWNER)
-		body._damage(self.DAMAGE)
+		body._damage(roundf(DAMAGE))

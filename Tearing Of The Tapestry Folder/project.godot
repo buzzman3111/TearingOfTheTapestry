@@ -21,6 +21,7 @@ config/icon="res://assets/art/icon.svg"
 [global_group]
 
 character=""
+effects=""
 
 [input]
 

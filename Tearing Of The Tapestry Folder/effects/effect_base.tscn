@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://duydghldf83c"]
+
+[ext_resource type="Script" uid="uid://bwlqxcn4my8bt" path="res://effects/effect_base.gd" id="1_5w6et"]
+
+[node name="EffectBase" type="Node" unique_id=861128799]
+script = ExtResource("1_5w6et")
+
+[node name="DurationTimer" type="Timer" parent="." unique_id=377322170]
+
+[connection signal="timeout" from="DurationTimer" to="." method="_on_effect_duration_timeout"]
