@@ -34,6 +34,7 @@ func _fire_projectile(projectile_owner: Node2D,
 	projectile_index: int, 
 	damage: int = player_stats.PROJECTILE_DAMAGE,
 	rotation: float = aim.rotation) -> void:
+	
 	var projectile = projectile_scenes[projectile_index].instantiate()
 	
 	projectile.global_position = aim.global_position

@@ -2,4 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://cv33it1speaiu" path="res://characters/attacks/melee/melee_base.tscn" id="1_w37v8"]
 
-[node name="KaKesUlt3" unique_id=476710053 instance=ExtResource("1_w37v8")]
+[node name="TestMelee" unique_id=476710053 instance=ExtResource("1_w37v8")]
