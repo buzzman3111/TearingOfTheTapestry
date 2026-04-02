@@ -67,25 +67,21 @@ func _physics_process(delta: float) -> void:
 		# If we click the attcak button and can attack, we attack
 		if (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_RIGHT)) and CAN_ATTACK:
 			CAN_ATTACK = false
-			var BI_effect = _check_BI()[0]
-			_attack(BI_effect)
+			_attack()
 		
 		
 		### Abilities
 		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_X) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_LEFT_SHOULDER)) and CAN_A1:
 			CAN_A1 = false
-			var BI_effect = _check_BI()[0]
-			_A1(BI_effect)
+			_A1()
 		
 		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_B) or Input.is_joy_button_pressed(player_index, JOY_BUTTON_RIGHT_SHOULDER)) and CAN_A2:
 			CAN_A2 = false
-			var BI_effect = _check_BI()[0]
-			_A2(BI_effect)
+			_A2()
 		
 		if Input.is_joy_button_pressed(player_index, JOY_BUTTON_Y) and CAN_ULT:
 			CAN_ULT = false
-			var BI_effect = _check_BI()[0]
-			_ultimate(BI_effect)
+			_ultimate()
 	
 	# Keyboard/mouse inputs (TEMPORARY, NOT POSSIBLE WITH CONTROLLER)
 	else:
@@ -106,23 +102,19 @@ func _physics_process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed('attack') and CAN_ATTACK:
 			CAN_ATTACK = false
-			var BI_effect = _check_BI()[0]
-			_attack(BI_effect)
+			_attack()
 		
 		if Input.is_action_just_pressed("ability 1") and CAN_A1:
 			CAN_A1 = false
-			var BI_effect = _check_BI()[0]
-			_A1(BI_effect)
+			_A1()
 		
 		if Input.is_action_just_pressed("ability 2") and CAN_A2:
 			CAN_A2 = false
-			var BI_effect = _check_BI()[0]
-			_A2(BI_effect)
+			_A2()
 		
 		if Input.is_action_just_pressed('ultimate') and CAN_ULT:
 			CAN_ULT = false
-			var BI_effect = _check_BI()[0]
-			_ultimate(BI_effect)
+			_ultimate()
 	
 	
 	# The dash velocity repidly decays over time
@@ -151,42 +143,42 @@ func _dash(move_dir: Vector2):
 
 
 # Chooses melee or ranged basic attack depending on character stats
-func _attack(effect_strength: float = 1.0, effect_amount: int = 0):
+func _attack():
 	var attack = STATS.ATTACK
 	
 	match attack:
 		STATS.attack_type.RANGED:
-			_basic_ranged_attack(effect_strength, effect_amount)
+			_basic_ranged_attack()
 		STATS.attack_type.MELEE:
-			_basic_melee_attack(effect_strength, effect_amount)
+			_basic_melee_attack()
 	
 	await get_tree().create_timer(STATS.ATTACK_COOLDOWN).timeout
 	CAN_ATTACK = true
 
-func _basic_ranged_attack(effect_strength: float = 1.0, effect_amount: int = 0):
+func _basic_ranged_attack():
 	@warning_ignore("narrowing_conversion")
-	projectile_spawner._fire_projectile(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
+	projectile_spawner._fire_projectile(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 
-func _basic_melee_attack(effect_strength: float = 1.0, effect_amount: int = 0):
+func _basic_melee_attack():
 	@warning_ignore("narrowing_conversion")
-	projectile_spawner._fire_melee(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
+	projectile_spawner._fire_melee(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 
 
 ### Ability base cases (overridden by child scene for full functionality) ###
 # Handles ability 1 base
-func _A1(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
+func _A1() -> void:
 	print('yarr')
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A1 = true
 
 # Handles ability 2 base
-func _A2(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
+func _A2() -> void:
 	print('matey')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
 
 # Handles ult base
-func _ultimate(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
+func _ultimate() -> void:
 	print('RAHHH')
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
 	CAN_A2 = true
@@ -211,13 +203,12 @@ func _die() -> void:
 	self.queue_free()
 
 
-func _check_BI() -> Array:
-	var strength: float = 1.0
-	var amount: int = 0
-	var BI = self.find_child('BI')	# Bardic inspiration
+# Checks for effects that increase/decrease attack/ability damage
+func _calc_damage(base_damage: int) -> int:
+	var final_damage = base_damage
+	var BI = self.find_child('BI')
 	if BI:
-		strength = BI.effect_strength
-		amount = BI.effect_amount
+		final_damage = BI._increase_effect(final_damage)
 		BI._on_effect_duration_timeout()
 	
-	return [strength, amount]
+	return final_damage

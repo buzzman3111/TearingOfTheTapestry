@@ -32,8 +32,13 @@ func _add_stacks(amount: int = 1) -> void:
 		num_stacks = max_stacks
 
 
-# Called by the GameManager to deal damage if applicable
+# Called by the GameManager to deal damage to owner if applicable
 func _damage() -> void:
 	var victim = self.owner
 	if victim.has_method('_damage'):
 		victim._damage(self.damage)
+
+
+# Called by functions to increase attack/ability effectiveness
+func _increase_effect(base_val: int) -> int:
+	return (roundf(base_val * effect_strength) + effect_amount)

@@ -24,40 +24,41 @@ func _ready() -> void:
 
 
 # Override for ult melee funcitonality
-func _attack(effect_strength: float = 1.0, effect_amount: int = 0):
+func _attack():
 	if current_ult_melee > 4:
 		_on_ult_duration_timeout()
 	elif IS_ULTING:
-		projectile_spawner._fire_melee(self, current_ult_melee, roundf(ULT_damage[current_ult_melee-1] * effect_strength) + effect_amount)
+		projectile_spawner._fire_melee(self, current_ult_melee, _calc_damage(ULT_damage[current_ult_melee-1]))
 		current_ult_melee += 1
 		await get_tree().create_timer(1.0).timeout
 	else:
-		super._attack(effect_strength)
+		super._attack()
 		
 		await get_tree().create_timer(STATS.ATTACK_COOLDOWN).timeout
 	
 	CAN_ATTACK = true
 
 
-func _basic_ranged_attack(effect_strength: float = 1.0, effect_amount: int = 0):
-	projectile_spawner._fire_projectile(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
+func _basic_ranged_attack():
+	projectile_spawner._fire_projectile(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 	await get_tree().create_timer(0.1).timeout
-	projectile_spawner._fire_projectile(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
+	projectile_spawner._fire_projectile(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 	await get_tree().create_timer(0.1).timeout
-	projectile_spawner._fire_projectile(self, 0, roundf(STATS.PROJECTILE_DAMAGE * effect_strength) + effect_amount)
+	projectile_spawner._fire_projectile(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 
-func _A1(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
-	projectile_spawner._fire_melee(self, KaKesMelee.A1, roundf(A1_damage * effect_strength) + effect_amount)
+
+func _A1() -> void:
+	projectile_spawner._fire_melee(self, KaKesMelee.A1, _calc_damage(A1_damage))
 	print('Ka Kes A1')
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A1 = true
 
 
-func _A2(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
+func _A2() -> void:
 	var BI = self.find_child('BI')	# Bardic inspiration
 	
 	if BI:
-		BI._add_stacks(roundf(effect_amount) + effect_strength)
+		BI._add_stacks()
 	else:
 		var new_BI = BI_setter.instantiate()
 		new_BI.name = 'BI'
@@ -69,7 +70,7 @@ func _A2(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
 	CAN_A2 = true
 
 
-func _ultimate(effect_strength: float = 1.0, effect_amount: int = 0) -> void:
+func _ultimate() -> void:
 	print('Ka Kes Ult')
 	ult_duration_timer.start()
 	IS_ULTING = true
