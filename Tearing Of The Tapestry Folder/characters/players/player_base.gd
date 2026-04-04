@@ -83,7 +83,7 @@ func _physics_process(delta: float) -> void:
 			CAN_ULT = false
 			_ultimate()
 	
-	# Keyboard/mouse inputs (TEMPORARY, NOT POSSIBLE WITH CONTROLLER)
+	## Keyboard/mouse inputs (TEMPORARY, I WANT TO GET RID OF THIS SO BAD BUT ITS SO GOOD FOR WORKING W/OUT A CONTROLLER)
 	else:
 		# Movement
 		var move_dir_x = Input.get_axis('left', 'right')
@@ -184,7 +184,7 @@ func _ultimate() -> void:
 	CAN_A2 = true
 
 
-func _damage(amount: int) -> void:
+func _take_damage(amount: int) -> void:
 	var barrier = self.find_child('Barrier')
 	if barrier:
 		print('nuh uh')

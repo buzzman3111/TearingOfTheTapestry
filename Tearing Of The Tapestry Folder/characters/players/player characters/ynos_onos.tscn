@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_dqnst"]
 [ext_resource type="Script" uid="uid://bw8q30btmj3g7" path="res://characters/players/player characters/ynos_onos.gd" id="2_35v2c"]
 [ext_resource type="Texture2D" uid="uid://1lyxv6qbf23i" path="res://assets/art/YnosOnos.png" id="2_dqnst"]
+[ext_resource type="PackedScene" uid="uid://8qw6wqnd85m6" path="res://effects/bardic_inspiration.tscn" id="3_3unar"]
 [ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/projectiles/ynos_projectile.tscn" id="4_s5ebq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqnst"]
@@ -15,6 +16,8 @@ height = 100.0
 
 [node name="YnosOnos" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_dqnst")]
 script = ExtResource("2_35v2c")
+BI_setter = ExtResource("3_3unar")
+clone_setter = null
 STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
@@ -34,3 +37,9 @@ shape = SubResource("CapsuleShape2D_dqnst")
 
 [node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
 shape = SubResource("CapsuleShape2D_35v2c")
+
+[node name="CloneTimer" type="Timer" parent="." index="6" unique_id=754515717]
+wait_time = 8.0
+one_shot = true
+
+[connection signal="timeout" from="CloneTimer" to="." method="_on_clone_timer_timeout"]

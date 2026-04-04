@@ -1,11 +1,14 @@
 extends Projectile
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	super._ready()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	super._process(delta)
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if (
+		body.is_in_group('character')
+		and body != OWNER
+		and (
+			(OWNER.get('IS_CLONE') == null) 
+			or ((OWNER.get('IS_CLONE') == true) and (body.name != 'YnosOnos'))
+		)
+	):
+		print('hit: ', body)
+		print('owner: ', OWNER)
+		body._take_damage(roundf(DAMAGE))

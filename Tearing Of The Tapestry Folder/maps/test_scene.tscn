@@ -10,7 +10,13 @@
 
 [node name="KaKes" parent="." unique_id=961990300 instance=ExtResource("2_rhnn0")]
 position = Vector2(425, 283)
+player_index = 1
+
+[node name="KaKes2" parent="." unique_id=692386083 instance=ExtResource("2_rhnn0")]
+position = Vector2(235, 106)
+player_index = 2
 
 [node name="YnosOnos" parent="." unique_id=29909501 instance=ExtResource("1_rhnn0")]
 position = Vector2(807, 283)
-player_index = 1
+clone_setter = ExtResource("1_rhnn0")
+using_controller = false
