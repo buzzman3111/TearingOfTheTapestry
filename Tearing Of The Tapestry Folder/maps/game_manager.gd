@@ -16,6 +16,7 @@ func _ready() -> void:
 
 
 func _on_damage_tick_timeout() -> void:
-	print('Damage tick')
+	#print('Damage tick')
+	pass
 	
 	### Call damage tick for all damage effects on all characters in scene tree

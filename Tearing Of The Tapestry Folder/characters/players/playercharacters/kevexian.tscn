@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqmhrfbc8ssyl"]
 
 [ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_35dhj"]
-[ext_resource type="Script" uid="uid://dxkomiqrjuyp0" path="res://characters/players/player characters/kevexian.gd" id="2_serf6"]
+[ext_resource type="Script" uid="uid://dxkomiqrjuyp0" path="res://characters/players/playercharacters/kevexian.gd" id="2_serf6"]
 [ext_resource type="Texture2D" uid="uid://cndohc5iv63sk" path="res://assets/art/Kevexian.png" id="2_ytjdu"]
 [ext_resource type="PackedScene" uid="uid://dldiffxpynxii" path="res://characters/attacks/melee/kevexian_melee.tscn" id="4_serf6"]
 
