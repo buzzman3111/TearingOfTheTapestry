@@ -156,11 +156,9 @@ func _attack():
 	CAN_ATTACK = true
 
 func _basic_ranged_attack():
-	@warning_ignore("narrowing_conversion")
 	projectile_spawner._fire_projectile(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 
 func _basic_melee_attack():
-	@warning_ignore("narrowing_conversion")
 	projectile_spawner._fire_melee(self, 0, _calc_damage(STATS.PROJECTILE_DAMAGE))
 
 
@@ -180,7 +178,7 @@ func _A2() -> void:
 # Handles ult base
 func _ultimate() -> void:
 	print('RAHHH')
-	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
+	await get_tree().create_timer(STATS.ULT_COOLDOWN).timeout
 	CAN_A2 = true
 
 
@@ -204,8 +202,8 @@ func _die() -> void:
 
 
 # Checks for effects that increase/decrease attack/ability damage
-func _calc_damage(base_damage: int) -> int:
-	var final_damage = base_damage
+func _calc_damage(base_value: int) -> int:
+	var final_damage = base_value
 	var BI = self.find_child('BI')
 	if BI:
 		final_damage = BI._increase_effect(final_damage)

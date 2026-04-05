@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bivcm6noga6be"]
 
 [ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_dqnst"]
-[ext_resource type="Script" uid="uid://bw8q30btmj3g7" path="res://characters/players/player characters/ynos_onos.gd" id="2_35v2c"]
+[ext_resource type="Script" uid="uid://bw8q30btmj3g7" path="res://characters/players/playercharacters/ynos_onos.gd" id="2_35v2c"]
 [ext_resource type="Texture2D" uid="uid://1lyxv6qbf23i" path="res://assets/art/YnosOnos.png" id="2_dqnst"]
 [ext_resource type="PackedScene" uid="uid://8qw6wqnd85m6" path="res://effects/bardic_inspiration.tscn" id="3_3unar"]
 [ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/projectiles/ynos_projectile.tscn" id="4_s5ebq"]
@@ -17,7 +17,6 @@ height = 100.0
 [node name="YnosOnos" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_dqnst")]
 script = ExtResource("2_35v2c")
 BI_setter = ExtResource("3_3unar")
-clone_setter = null
 STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
