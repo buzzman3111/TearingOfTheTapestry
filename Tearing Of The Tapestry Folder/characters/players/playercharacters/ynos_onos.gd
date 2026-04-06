@@ -6,12 +6,10 @@ const ynos_scene = preload('res://characters/players/playercharacters/ynos_onos.
 
 var IS_CLONE: bool = false
 var clone_ind: int = 0
-var orbit_angle: float = 0.0
 var last_move_dir: Vector2 = Vector2.RIGHT
 
-const CLONE_RADIUS: float = 350.0
-const CLONE_ROT_SPEED: float = 2.0
-const CLONE_FOLLOW_LERP: float = 2.0
+const CLONE_RADIUS: float = 200.0
+const CLONE_FOLLOW_LERP: float = 5.0
 
 @onready var clone_timer: Timer = $CloneTimer
 
@@ -74,7 +72,7 @@ func _physics_process(delta: float) -> void:
 				CAN_ULT = false
 				_ultimate()
 		
-		_update_clone_orbit(delta)
+		_update_clone_pos(delta, aim_dir)
 		
 			### Rudementary sprite logic
 		if CAN_ATTACK:
@@ -87,39 +85,24 @@ func _physics_process(delta: float) -> void:
 				player_sprite.flip_h = false
 			elif aim_dir.x < 0:
 				player_sprite.flip_h = true
-
+		
 		
 	else:
 		super._physics_process(delta)
 
 
 
-func _update_clone_orbit(delta: float) -> void:
-	var ynos = get_parent()
-	
-	if ynos == null or !is_instance_valid(ynos):
-		_on_clone_timer_timeout()
-		return
-	
-	var move_dir: Vector2 = ynos.velocity.normalized()
-	
-	if move_dir.length() > 0.01:
+func _update_clone_pos(delta: float, move_dir: Vector2) -> void:
+	if move_dir.length() > DEADZONE:
 		last_move_dir = move_dir
-		orbit_angle += CLONE_ROT_SPEED * delta
+		move_dir = move_dir.normalized()
 	else:
-		move_dir = last_move_dir
+		move_dir = last_move_dir.normalized()
 	
-	var side = Vector2(-move_dir.y, move_dir.x)
+	var pos = (Vector2(move_dir.x, move_dir.y) if clone_ind == 1 
+		else Vector2(-move_dir.x, -move_dir.y))
 	
-	var phase_offset = 0.0 if clone_ind == 0 else PI
-	var angle = orbit_angle + phase_offset
-	
-	var target_offset = (
-		move_dir * cos(angle) * CLONE_RADIUS
-		+ side * sin(angle) * CLONE_RADIUS
-	)
-	
-	position = position.lerp(target_offset, CLONE_FOLLOW_LERP * delta)
+	position = position.lerp(CLONE_RADIUS * pos, CLONE_FOLLOW_LERP * delta)
 
 
 
