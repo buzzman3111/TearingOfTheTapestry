@@ -2,17 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://bivcm6noga6be" path="res://characters/players/playercharacters/ynos_onos.tscn" id="1_rhnn0"]
 [ext_resource type="PackedScene" uid="uid://beay1s1u2i4ak" path="res://characters/players/playercharacters/ka_kes.tscn" id="2_rhnn0"]
+[ext_resource type="PackedScene" uid="uid://cgno6kthnuq71" path="res://characters/players/playercharacters/layfe.tscn" id="3_tv4fw"]
 
 [node name="TestScene" type="Node2D" unique_id=433689384]
 
 [node name="KaKes" parent="." unique_id=961990300 instance=ExtResource("2_rhnn0")]
 position = Vector2(425, 283)
-player_index = 1
-using_controller = false
-
-[node name="KaKes2" parent="." unique_id=692386083 instance=ExtResource("2_rhnn0")]
-position = Vector2(235, 106)
-player_index = 2
+player_index = 3
 
 [node name="YnosOnos" parent="." unique_id=167681896 instance=ExtResource("1_rhnn0")]
-position = Vector2(590, 193)
+position = Vector2(360, 132)
+player_index = 3
+
+[node name="Layfe" parent="." unique_id=1903747234 instance=ExtResource("3_tv4fw")]
+position = Vector2(518, 119)
