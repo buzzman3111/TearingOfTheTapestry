@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dyd5vqsvti0c5"]
+
+[ext_resource type="PackedScene" uid="uid://duydghldf83c" path="res://effects/effect_base.tscn" id="1_owlfx"]
+[ext_resource type="Script" uid="uid://dp2phr5oq4lyx" path="res://effects/healing_aura.gd" id="2_yyxtn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_owlfx"]
+radius = 150.0
+
+[node name="HA" unique_id=861128799 instance=ExtResource("1_owlfx")]
+script = ExtResource("2_yyxtn")
+healing_per_second = 5
+effect_duration = 5.0
+max_stacks = 1
+
+[node name="CollisionArea" type="Area2D" parent="." index="1" unique_id=98417907]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea" index="0" unique_id=592471677]
+shape = SubResource("CircleShape2D_owlfx")

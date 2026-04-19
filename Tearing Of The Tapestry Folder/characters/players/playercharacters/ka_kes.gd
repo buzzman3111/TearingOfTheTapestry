@@ -57,8 +57,9 @@ func _A1() -> void:
 func _A2() -> void:
 	var BI = self.find_child('BI')	# Bardic inspiration
 	
+	# I would like to eventually change this into a function that sets any effect
 	if BI:
-		BI._add_stacks()
+		BI._add_stacks(self)
 	else:
 		var new_BI = BI_setter.instantiate()
 		new_BI.name = 'BI'

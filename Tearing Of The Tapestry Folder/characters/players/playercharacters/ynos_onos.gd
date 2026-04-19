@@ -1,6 +1,7 @@
 extends PlayerBase
 
 @export var BI_setter: PackedScene 		# Change to preload() for performance ?
+@export var HA_setter: PackedScene 		# Change to preload() for performance ?
 
 const ynos_scene = preload('res://characters/players/playercharacters/ynos_onos.tscn')
 
@@ -8,7 +9,7 @@ var IS_CLONE: bool = false
 var clone_ind: int = 0
 var last_move_dir: Vector2 = Vector2.RIGHT
 
-const CLONE_RADIUS: float = 200.0
+const CLONE_RADIUS: float = 250.0
 const CLONE_FOLLOW_LERP: float = 5.0
 
 @onready var clone_timer: Timer = $CloneTimer
@@ -86,7 +87,6 @@ func _physics_process(delta: float) -> void:
 			elif aim_dir.x < 0:
 				player_sprite.flip_h = true
 		
-		
 	else:
 		super._physics_process(delta)
 
@@ -140,9 +140,9 @@ func _A1() -> void:
 	
 	# Then give that nearest player a BI stack
 	var BI = nearest_player.find_child('BI')
-	
+	# I would like to eventually change this into a function that sets any effect
 	if BI:
-		BI._add_stacks()
+		BI._add_stacks(nearest_player)
 	else:
 		var new_BI = BI_setter.instantiate()
 		new_BI.name = 'BI'
@@ -159,6 +159,23 @@ func _A1() -> void:
 ## Give self 1 Healing Aura stack
 func _A2() -> void:
 	print('Ynos A2')
+	
+	var HA = self.find_child('HA')
+	if HA:
+		if IS_CLONE:
+			HA._add_stacks(self.owner)
+		else:
+			HA._add_stacks(self)
+	else:
+		var new_HA = HA_setter.instantiate()
+		new_HA.name = 'HA'
+		GameManager.damage_tick.connect(new_HA._damage)
+		self.add_child(new_HA)
+		if IS_CLONE:
+			new_HA.owner = self.owner
+		else:
+			new_HA.owner = self
+	
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A2 = true
 
@@ -183,6 +200,8 @@ func _ultimate() -> void:
 		new_ynos_close_2.name = 'YnosClone2'
 		self.add_child(new_ynos_close_1)
 		self.add_child(new_ynos_close_2)
+		new_ynos_close_1.owner = self
+		new_ynos_close_2.owner = self
 	
 	await get_tree().create_timer(STATS.ULT_COOLDOWN).timeout
 	CAN_ULT = true

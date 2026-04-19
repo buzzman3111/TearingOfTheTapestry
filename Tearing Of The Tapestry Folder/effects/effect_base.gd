@@ -26,7 +26,9 @@ func _on_effect_duration_timeout() -> void:
 		self.queue_free()
 
 
-func _add_stacks(amount: int = 1) -> void:
+# Call when adding new stacks of 
+func _add_stacks(effect_owner, amount: int = 1) -> void:
+	self.owner = effect_owner
 	num_stacks += amount
 	if num_stacks > max_stacks:
 		num_stacks = max_stacks
@@ -35,10 +37,10 @@ func _add_stacks(amount: int = 1) -> void:
 # Called by the GameManager to deal damage to owner if applicable
 func _damage() -> void:
 	var victim = self.owner
-	if victim.has_method('_damage'):
-		victim._damage(self.damage)
+	if victim.has_method('_take_damage'):
+		victim._take_damage(self.damage)
 
 
-# Called by functions to increase attack/ability effectiveness
+# Called by functions to increase attack/ability effectiveness if applicable
 func _increase_effect(base_val: int) -> int:
 	return (roundf(base_val * effect_strength) + effect_amount)

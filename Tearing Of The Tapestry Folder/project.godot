@@ -18,6 +18,10 @@ config/name="TearingOfTheTapestryFolder"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/art/icon.svg"
 
+[autoload]
+
+GameManager="*uid://cxskdfknwlrd0"
+
 [global_group]
 
 character=""

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://1lyxv6qbf23i" path="res://assets/art/YnosOnos.png" id="2_dqnst"]
 [ext_resource type="PackedScene" uid="uid://8qw6wqnd85m6" path="res://effects/bardic_inspiration.tscn" id="3_3unar"]
 [ext_resource type="PackedScene" uid="uid://dvoknyentl3x2" path="res://characters/attacks/projectiles/ynos_projectile.tscn" id="4_s5ebq"]
+[ext_resource type="PackedScene" uid="uid://dyd5vqsvti0c5" path="res://effects/healing_aura.tscn" id="4_w4pfl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqnst"]
 radius = 25.0
@@ -17,6 +18,7 @@ height = 100.0
 [node name="YnosOnos" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_dqnst")]
 script = ExtResource("2_35v2c")
 BI_setter = ExtResource("3_3unar")
+HA_setter = ExtResource("4_w4pfl")
 STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
