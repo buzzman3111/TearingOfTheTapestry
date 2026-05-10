@@ -9,6 +9,8 @@ var OWNER: Node2D
 var move_dir: Vector2
 var start_pos: Vector2
 
+var IS_PIERCING = false
+
 @onready var hitbox: Area2D = $Hitbox
 
 # Called when the node enters the scene tree for the first time.
@@ -30,3 +32,6 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		print('hit: ', body)
 		print('owner: ', OWNER)
 		body._take_damage(roundf(DAMAGE))
+		
+		if !IS_PIERCING:
+			self.queue_free()

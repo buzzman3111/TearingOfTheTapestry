@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://fk2fmtala1b7"]
+
+[ext_resource type="Texture2D" uid="uid://xa6q3unn0cno" path="res://assets/art/KaKesProjectile.png" id="1_he5et"]
+[ext_resource type="Script" uid="uid://bgnh023sn1t8c" path="res://characters/attacks/melee/melee_base.gd" id="1_pw2vf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_he5et"]
+size = Vector2(87.5, 1617)
+
+[node name="Moonbeam" type="Node2D" unique_id=1360801957]
+script = ExtResource("1_pw2vf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=839391546]
+self_modulate = Color(8.87978, 11.658543, 0, 1)
+rotation = 1.5707964
+scale = Vector2(53.791027, 15.482995)
+texture = ExtResource("1_he5et")
+offset = Vector2(-15, 0)
+region_enabled = true
+region_rect = Rect2(1, 13, 30, 5)
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1288407698]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1299681817]
+position = Vector2(0, -808.5)
+shape = SubResource("RectangleShape2D_he5et")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

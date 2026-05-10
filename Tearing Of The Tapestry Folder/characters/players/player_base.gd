@@ -117,8 +117,11 @@ func _physics_process(delta: float) -> void:
 			_ultimate()
 	
 	
-	# The dash velocity repidly decays over time
+	# The dash velocity decays over time
 	dash_vel = dash_vel.move_toward(Vector2.ZERO, DASH_DECAY*delta)
+	var slow = self.find_child('SLOW')
+	if slow:
+		base_vel *= 1 - slow.effect_strength
 	velocity = base_vel + dash_vel
 	move_and_slide()
 	

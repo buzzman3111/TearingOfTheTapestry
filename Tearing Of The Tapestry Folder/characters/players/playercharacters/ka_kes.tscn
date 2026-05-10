@@ -12,12 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://ct4s7we1yjhk5" path="res://characters/attacks/abilities/ka_kes_ult_4.tscn" id="9_0eg70"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxs0j"]
-radius = 25.0
-height = 90.0
+radius = 26.0
+height = 102.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yeg8e"]
-radius = 30.0
-height = 100.0
+radius = 33.0
+height = 124.0
 
 [node name="KaKes" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_aq6j0")]
 script = ExtResource("2_uey06")
@@ -44,9 +44,11 @@ projectile_scenes = Array[PackedScene]([ExtResource("3_yeg8e")])
 melee_scenes = Array[PackedScene]([ExtResource("6_0eg70"), ExtResource("6_kxx75"), ExtResource("7_0fiex"), ExtResource("8_05xtb"), ExtResource("9_0eg70")])
 
 [node name="EnvironmentCollision" parent="." index="4" unique_id=1460140901]
+position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_sxs0j")
 
 [node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
+position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_yeg8e")
 
 [node name="UltDurationTimer" type="Timer" parent="." index="6" unique_id=1024865883]
