@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_y88wn"]
 [ext_resource type="Script" uid="uid://dfpxn7r38cj04" path="res://characters/players/playercharacters/layfe.gd" id="2_55bxo"]
-[ext_resource type="Texture2D" uid="uid://cu0hbdl0h30ij" path="res://assets/art/layfe.png" id="2_ye1m7"]
+[ext_resource type="Texture2D" uid="uid://rc6w13ncwhb1" path="res://assets/art/layfe.png" id="2_ye1m7"]
+[ext_resource type="PackedScene" uid="uid://cguu0msfnbn3j" path="res://effects/slow.tscn" id="3_t42mg"]
 [ext_resource type="PackedScene" uid="uid://c2yee03yowc14" path="res://characters/attacks/projectiles/ka_kes_projectile.tscn" id="4_1qmb8"]
+[ext_resource type="PackedScene" uid="uid://fk2fmtala1b7" path="res://characters/attacks/abilities/moonbeam.tscn" id="5_c7fmj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_55bxo"]
 radius = 26.0
@@ -15,17 +17,22 @@ height = 108.0
 
 [node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_y88wn")]
 script = ExtResource("2_55bxo")
+SLOW_setter = ExtResource("3_t42mg")
+A1_DAMAGE = 20
 STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
 texture = ExtResource("2_ye1m7")
-offset = Vector2(2, 1)
+offset = Vector2(0, 1)
+region_enabled = true
+region_rect = Rect2(4, 3, 23, 27)
 
 [node name="PlayerStats" parent="." index="1" unique_id=2105738643]
 ATTACK = 0
 
 [node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
 projectile_scenes = Array[PackedScene]([ExtResource("4_1qmb8")])
+melee_scenes = Array[PackedScene]([ExtResource("5_c7fmj")])
 
 [node name="EnvironmentCollision" parent="." index="4" unique_id=1460140901]
 position = Vector2(0, 10)

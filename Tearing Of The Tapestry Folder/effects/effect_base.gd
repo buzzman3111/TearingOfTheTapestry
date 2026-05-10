@@ -41,6 +41,6 @@ func _damage() -> void:
 		victim._take_damage(self.damage)
 
 
-# Called by functions to increase attack/ability effectiveness if applicable
+# Called by functions to change attack/ability effectiveness if applicable
 func _increase_effect(base_val: int) -> int:
 	return (roundf(base_val * effect_strength) + effect_amount)

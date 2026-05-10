@@ -1,7 +1,7 @@
 extends PlayerBase
 
-@export var BI_setter: PackedScene 		# Change to preload() for performance ?
-@export var HA_setter: PackedScene 		# Change to preload() for performance ?
+@export var BI_setter: PackedScene 	 # Change to preload() for performance ?
+@export var HA_setter: PackedScene 	 # Change to preload() for performance ?
 
 const ynos_scene = preload('res://characters/players/playercharacters/ynos_onos.tscn')
 

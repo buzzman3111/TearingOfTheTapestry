@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_owlfx"]
 radius = 150.0
 
-[node name="HA" unique_id=861128799 instance=ExtResource("1_owlfx")]
+[node name="HA" unique_id=861128799 groups=["effects"] instance=ExtResource("1_owlfx")]
 script = ExtResource("2_yyxtn")
 healing_per_second = 5
 effect_duration = 5.0
@@ -16,3 +16,6 @@ max_stacks = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea" index="0" unique_id=592471677]
 shape = SubResource("CircleShape2D_owlfx")
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]
+[connection signal="body_exited" from="CollisionArea" to="." method="_on_collision_area_body_exited"]
