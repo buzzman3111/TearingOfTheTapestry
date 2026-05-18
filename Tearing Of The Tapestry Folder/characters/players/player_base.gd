@@ -27,6 +27,9 @@ var CAN_ULT = true
 
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
+var move_dir = Vector2(0,0)
+var aim_dir = Vector2(0,0)
+var base_vel = Vector2(0,0)
 
 
 func _ready() -> void:
@@ -34,12 +37,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var move_dir = Vector2(0,0)
-	var aim_dir = Vector2(0,0)
-	var base_vel = Vector2(0,0)
 	
-	
-	## Controller
+	## Controller logic
 	if using_controller: # Controller inputs
 		# Gets the direction of the left joystick
 		var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
@@ -139,8 +138,8 @@ func _physics_process(delta: float) -> void:
 			player_sprite.flip_h = true
 
 
-func _dash(move_dir: Vector2):
-	dash_vel = move_dir.normalized() * STATS.DASH_SPEED
+func _dash(movement_dir: Vector2):
+	dash_vel = movement_dir.normalized() * STATS.DASH_SPEED
 	await get_tree().create_timer(STATS.DASH_COOLDOWN).timeout
 	CAN_DASH = true
 

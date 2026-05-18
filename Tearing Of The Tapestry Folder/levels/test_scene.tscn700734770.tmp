@@ -12,8 +12,8 @@ player_index = 3
 
 [node name="YnosOnos" parent="." unique_id=167681896 instance=ExtResource("2_ohqux")]
 position = Vector2(360, 132)
-using_controller = false
+player_index = 1
 
 [node name="Layfe" parent="." unique_id=1903747234 instance=ExtResource("3_a47p7")]
 position = Vector2(518, 119)
-player_index = 1
+using_controller = false

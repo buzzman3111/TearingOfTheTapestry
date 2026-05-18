@@ -122,17 +122,7 @@ func _is_valid_A1_target(character_node) -> bool:
 ### Find nearest player and give them a BI stack
 func _A1() -> void:
 	print('Ynos A1')
-	var level_children = get_tree().current_scene.get_children()
-	
-	var nearest_player_pos: Vector2 = Vector2.INF
-	var nearest_player: CharacterBody2D = null
-	
-	for child in level_children: 	# For each child in the level, (should def find a way to optimize this)
-		if _is_valid_A1_target(child): 	  # If that is a player characer and isnt Ynos,
-			var child_rel_pos = self.global_position - child.global_position 	# Note the distance from Ynos to that player
-			if child_rel_pos.length() < nearest_player_pos.length(): 	# Then if that distance is less than the current marked nearst player,
-				nearest_player_pos = child_rel_pos 	  # Note this child's position and
-				nearest_player = child 	  # Mark this child as the new nearest player
+	var nearest_player = _find_nearest_player()
 	
 	if nearest_player == null:
 		print('no valid Ynos A1 target found')
@@ -153,6 +143,20 @@ func _A1() -> void:
 	
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A1 = true
+
+
+func _find_nearest_player():
+	var level_children = get_tree().current_scene.get_children() # Will break when creating actual levels
+	var nearest_child = null
+	var nearest_distance = INF
+	for child in level_children:
+		if _is_valid_A1_target(child):
+			var child_rel_pos = self.global_position.distance_squared_to(child.global_position)
+			if child_rel_pos < nearest_distance:
+				nearest_child = child
+				nearest_distance = child_rel_pos
+	
+	return nearest_child
 
 
 

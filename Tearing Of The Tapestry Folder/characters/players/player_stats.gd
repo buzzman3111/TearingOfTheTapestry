@@ -10,7 +10,7 @@ enum attack_type {RANGED, MELEE, NONE}
 # Basics
 @export var HP = 100
 @export var MAX_HP = 100
-@export var mana = 100 # ?
+@export var MANA = 100 # Keep or no?
 
 # Player stats tracker
 @export var SPEED = 300.0

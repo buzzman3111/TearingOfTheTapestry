@@ -23,7 +23,7 @@ func _fire_melee(projectile_owner: Node2D,
 	melee.global_position = aim.global_position
 	melee.DURATION = DURATION
 	melee.rotation = rotation
-	melee.OWNER = owner
+	melee.OWNER = projectile_owner
 	melee.DAMAGE = damage
 	
 	self.add_child(melee)
@@ -33,15 +33,17 @@ func _fire_melee(projectile_owner: Node2D,
 func _fire_projectile(projectile_owner: Node2D,
 	projectile_index: int, 
 	damage: int = player_stats.PROJECTILE_DAMAGE,
-	rotation: float = aim.rotation) -> void:
+	rotation: float = aim.rotation,
+	proj_range: float = player_stats.PROJECTILE_RANGE,
+	speed: float = player_stats.PROJECTILE_SPEED) -> void:
 	
 	var projectile = projectile_scenes[projectile_index].instantiate()
 	
 	projectile.global_position = aim.global_position
-	projectile.RANGE = player_stats.PROJECTILE_RANGE
-	projectile.SPEED = player_stats.PROJECTILE_SPEED
+	projectile.RANGE = proj_range
+	projectile.SPEED = speed
 	projectile.DAMAGE = damage
-	projectile.OWNER = owner
+	projectile.OWNER = projectile_owner
 	
 	var move_dir = _get_dir(rotation)
 	_apply_dir_rot(projectile, move_dir, rotation)

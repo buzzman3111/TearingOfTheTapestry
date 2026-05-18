@@ -5,7 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://rc6w13ncwhb1" path="res://assets/art/layfe.png" id="2_ye1m7"]
 [ext_resource type="PackedScene" uid="uid://cguu0msfnbn3j" path="res://effects/slow.tscn" id="3_t42mg"]
 [ext_resource type="PackedScene" uid="uid://c2yee03yowc14" path="res://characters/attacks/projectiles/ka_kes_projectile.tscn" id="4_1qmb8"]
+[ext_resource type="Texture2D" uid="uid://ds55rmcte0rel" path="res://assets/art/starryCloakSprite.png" id="5_412ql"]
 [ext_resource type="PackedScene" uid="uid://fk2fmtala1b7" path="res://characters/attacks/abilities/moonbeam.tscn" id="5_c7fmj"]
+[ext_resource type="PackedScene" uid="uid://ce3bmu44lufaj" path="res://characters/attacks/projectiles/starry_cloak_projectile.tscn" id="7_4yaad"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_55bxo"]
 radius = 26.0
@@ -18,7 +20,8 @@ height = 108.0
 [node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_y88wn")]
 script = ExtResource("2_55bxo")
 SLOW_setter = ExtResource("3_t42mg")
-A1_DAMAGE = 20
+A1_FULL_DAMAGE = 20
+A2_FULL_DAMAGE = 5
 STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
@@ -27,17 +30,28 @@ offset = Vector2(0, 1)
 region_enabled = true
 region_rect = Rect2(4, 3, 23, 27)
 
-[node name="PlayerStats" parent="." index="1" unique_id=2105738643]
+[node name="StarryCloakSprite" type="Sprite2D" parent="." index="1" unique_id=668690817]
+position = Vector2(0, 3)
+scale = Vector2(7, 7)
+texture = ExtResource("5_412ql")
+
+[node name="PlayerStats" parent="." index="2" unique_id=2105738643]
 ATTACK = 0
 
-[node name="ProjectileSpawner" parent="." index="2" unique_id=1973227358]
-projectile_scenes = Array[PackedScene]([ExtResource("4_1qmb8")])
+[node name="ProjectileSpawner" parent="." index="3" unique_id=1973227358]
+projectile_scenes = Array[PackedScene]([ExtResource("4_1qmb8"), ExtResource("7_4yaad")])
 melee_scenes = Array[PackedScene]([ExtResource("5_c7fmj")])
 
-[node name="EnvironmentCollision" parent="." index="4" unique_id=1460140901]
+[node name="EnvironmentCollision" parent="." index="5" unique_id=1460140901]
 position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_55bxo")
 
 [node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
 position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_ye1m7")
+
+[node name="DeactivatePassiveTimer" type="Timer" parent="." index="7" unique_id=2030538791]
+wait_time = 2.5
+one_shot = true
+
+[connection signal="timeout" from="DeactivatePassiveTimer" to="." method="_on_deactivate_passive_timer_timeout"]

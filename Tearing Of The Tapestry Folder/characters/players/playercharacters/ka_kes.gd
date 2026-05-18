@@ -3,8 +3,6 @@ extends PlayerBase
 @onready var ult_duration_timer: Timer = $UltDurationTimer
 
 
-var move_dir: Vector2
-
 enum KaKesMelee {A1, Ult1, Ult2, Ult3, Ult4}
 
 @export var A1_damage := 5
