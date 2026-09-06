@@ -24,8 +24,9 @@ GameManager="*uid://cxskdfknwlrd0"
 
 [global_group]
 
-character=""
 effects=""
+player=""
+enemy=""
 
 [input]
 

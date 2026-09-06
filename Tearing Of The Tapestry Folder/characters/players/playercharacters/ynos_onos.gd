@@ -1,7 +1,9 @@
 extends PlayerBase
 
-@export var BI_setter: PackedScene 	 # Change to preload() for performance ?
-@export var HA_setter: PackedScene 	 # Change to preload() for performance ?
+const effect_setters := {
+	"BI": preload("res://effects/bardic_inspiration.tscn"),
+	"HA": preload("res://effects/healing_aura.tscn")
+}
 
 const ynos_scene = preload('res://characters/players/playercharacters/ynos_onos.tscn')
 
@@ -18,13 +20,16 @@ const CLONE_FOLLOW_LERP: float = 5.0
 func _ready() -> void:
 	if self.IS_CLONE == true:
 		clone_timer.start()
+		if self.is_in_group('player'):
+			self.remove_from_group('player')
 	
 	super._ready()
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
+	# I hate this section of code since it's mostly redundant especially with the controller/keyboard distinction 
+	# 	Would be nice to change this if possible
 	if IS_CLONE:
-		var aim_dir = Vector2(0,0)
 		
 		if using_controller:
 			### Attacks
@@ -88,19 +93,19 @@ func _physics_process(delta: float) -> void:
 				player_sprite.flip_h = true
 		
 	else:
-		super._physics_process(delta)
+		super._process(delta)
 
 
-
-func _update_clone_pos(delta: float, move_dir: Vector2) -> void:
-	if move_dir.length() > DEADZONE:
-		last_move_dir = move_dir
-		move_dir = move_dir.normalized()
+# Only works well for controller
+func _update_clone_pos(delta: float, movement_dir: Vector2) -> void:
+	if movement_dir.length() > DEADZONE:
+		last_move_dir = movement_dir
+		movement_dir = movement_dir.normalized()
 	else:
-		move_dir = last_move_dir.normalized()
+		movement_dir = last_move_dir.normalized()
 	
-	var pos = (Vector2(move_dir.x, move_dir.y) if clone_ind == 1 
-		else Vector2(-move_dir.x, -move_dir.y))
+	var pos = (Vector2(movement_dir.x, movement_dir.y) if clone_ind == 1 
+		else Vector2(-movement_dir.x, -movement_dir.y))
 	
 	position = position.lerp(CLONE_RADIUS * pos, CLONE_FOLLOW_LERP * delta)
 
@@ -129,15 +134,7 @@ func _A1() -> void:
 		return
 	
 	# Then give that nearest player a BI stack
-	var BI = nearest_player.find_child('BI')
-	# I would like to eventually change this into a function that sets any effect
-	if BI:
-		BI._add_stacks(nearest_player)
-	else:
-		var new_BI = BI_setter.instantiate()
-		new_BI.name = 'BI'
-		nearest_player.add_child(new_BI)
-		new_BI.owner = nearest_player
+	_set_effect('BI', nearest_player, nearest_player)
 	
 	print('gave 1 BI to: ', nearest_player.name)
 	
@@ -146,17 +143,19 @@ func _A1() -> void:
 
 
 func _find_nearest_player():
-	var level_children = get_tree().current_scene.get_children() # Will break when creating actual levels
-	var nearest_child = null
-	var nearest_distance = INF
-	for child in level_children:
-		if _is_valid_A1_target(child):
-			var child_rel_pos = self.global_position.distance_squared_to(child.global_position)
-			if child_rel_pos < nearest_distance:
-				nearest_child = child
-				nearest_distance = child_rel_pos
+	var possible_targets = GameManager.player_list
 	
-	return nearest_child
+	var nearest_target = self
+	var nearest_target_pos = Vector2(INF, INF)
+	
+	for obj_targeting in possible_targets:
+		var target = possible_targets[obj_targeting]
+		if (target != self) and (target.name != 'YnosOnos'):
+			if (self.global_position - target.global_position).length_squared() < nearest_target_pos.length_squared():
+				nearest_target_pos = self.global_position - target.global_position
+				nearest_target = target
+	
+	return nearest_target
 
 
 
@@ -164,21 +163,10 @@ func _find_nearest_player():
 func _A2() -> void:
 	print('Ynos A2')
 	
-	var HA = self.find_child('HA')
-	if HA:
-		if IS_CLONE:
-			HA._add_stacks(self.owner)
-		else:
-			HA._add_stacks(self)
+	if IS_CLONE:
+		_set_effect('HA', self, self.owner, true)
 	else:
-		var new_HA = HA_setter.instantiate()
-		new_HA.name = 'HA'
-		GameManager.damage_tick.connect(new_HA._damage)
-		self.add_child(new_HA)
-		if IS_CLONE:
-			new_HA.owner = self.owner
-		else:
-			new_HA.owner = self
+		_set_effect('HA', self, self, true)
 	
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A2 = true
@@ -188,27 +176,24 @@ func _A2() -> void:
 func _ultimate() -> void:
 	print("Ynos Ult")
 	if not IS_CLONE:
-		var new_ynos_close_1 = ynos_scene.instantiate()
-		var new_ynos_close_2 = ynos_scene.instantiate()
-		new_ynos_close_1.position = Vector2(150, 0)
-		new_ynos_close_2.position = Vector2(-150, 0)
-		new_ynos_close_1.IS_CLONE = true
-		new_ynos_close_2.IS_CLONE = true
-		new_ynos_close_1.player_index = self.player_index
-		new_ynos_close_2.player_index = self.player_index
-		new_ynos_close_1.using_controller = self.using_controller
-		new_ynos_close_2.using_controller = self.using_controller
-		new_ynos_close_1.clone_ind = 0
-		new_ynos_close_2.clone_ind = 1
-		new_ynos_close_1.name = 'YnosClone1'
-		new_ynos_close_2.name = 'YnosClone2'
-		self.add_child(new_ynos_close_1)
-		self.add_child(new_ynos_close_2)
-		new_ynos_close_1.owner = self
-		new_ynos_close_2.owner = self
+		_instantiate_clone(0)
+		_instantiate_clone(1)
 	
 	await get_tree().create_timer(STATS.ULT_COOLDOWN).timeout
 	CAN_ULT = true
+
+
+func _instantiate_clone(clone_index: int) -> void:
+	var new_ynos_close = ynos_scene.instantiate()
+	var clone_pos = Vector2(150, 0) if clone_index == 1 else Vector2(-150, 0)
+	new_ynos_close.clone_ind = clone_index
+	new_ynos_close.position = clone_pos
+	new_ynos_close.IS_CLONE = true
+	new_ynos_close.player_index = self.player_index
+	new_ynos_close.using_controller = self.using_controller
+	new_ynos_close.name = 'YnosClone' + str(clone_ind)
+	self.add_child(new_ynos_close)
+	new_ynos_close.owner = self
 
 
 func _on_clone_timer_timeout() -> void:
@@ -217,14 +202,4 @@ func _on_clone_timer_timeout() -> void:
 
 func _take_damage(amount: int) -> void:
 	if !IS_CLONE:
-		var barrier = self.find_child('Barrier')
-		if barrier:
-			print('nuh uh')
-			barrier.queue_free()
-		else:
-			STATS.HP -= amount
-			if STATS.HP > STATS.MAX_HP:
-				STATS.HP = STATS.MAX_HP
-			print('took ', amount, ' damage. HP=', STATS.HP)
-			if STATS.HP <= 0:
-				self._die()
+		super._take_damage(amount)

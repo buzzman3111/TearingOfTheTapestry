@@ -17,14 +17,14 @@ func _ready() -> void:
 func _damage() -> void:
 	#print(victims)
 	for victim in victims:
-		if victim.has_method('_take_damage') and victim.is_in_group('character'):
+		if victim.has_method('_take_damage') and victim.is_in_group('player'):
 			victim._take_damage(self.damage)
 
 
 func _on_collision_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group('character'):
+	if body.is_in_group('player'):
 		victims.append(body)
 
 func _on_collision_area_body_exited(body: Node2D) -> void:
-	if body.is_in_group('character') and victims.has(body):
+	if body.is_in_group('player') and victims.has(body):
 		victims.erase(body)

@@ -3,10 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://ds3atix62n2qk" path="res://characters/players/player_base.tscn" id="1_y88wn"]
 [ext_resource type="Script" uid="uid://dfpxn7r38cj04" path="res://characters/players/playercharacters/layfe.gd" id="2_55bxo"]
 [ext_resource type="Texture2D" uid="uid://rc6w13ncwhb1" path="res://assets/art/layfe.png" id="2_ye1m7"]
-[ext_resource type="PackedScene" uid="uid://cguu0msfnbn3j" path="res://effects/slow.tscn" id="3_t42mg"]
-[ext_resource type="PackedScene" uid="uid://c2yee03yowc14" path="res://characters/attacks/projectiles/ka_kes_projectile.tscn" id="4_1qmb8"]
 [ext_resource type="Texture2D" uid="uid://ds55rmcte0rel" path="res://assets/art/starryCloakSprite.png" id="5_412ql"]
-[ext_resource type="PackedScene" uid="uid://fk2fmtala1b7" path="res://characters/attacks/abilities/moonbeam.tscn" id="5_c7fmj"]
+[ext_resource type="PackedScene" uid="uid://fk2fmtala1b7" path="res://characters/attacks/abilities/layfe_a1.tscn" id="5_c7fmj"]
 [ext_resource type="PackedScene" uid="uid://ce3bmu44lufaj" path="res://characters/attacks/projectiles/starry_cloak_projectile.tscn" id="7_4yaad"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_55bxo"]
@@ -17,9 +15,11 @@ height = 96.0
 radius = 30.0
 height = 108.0
 
-[node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["character"] instance=ExtResource("1_y88wn")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3mukf"]
+radius = 187.00267
+
+[node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") instance=ExtResource("1_y88wn")]
 script = ExtResource("2_55bxo")
-SLOW_setter = ExtResource("3_t42mg")
 A1_FULL_DAMAGE = 20
 A2_FULL_DAMAGE = 5
 STATS = NodePath("PlayerStats")
@@ -31,18 +31,28 @@ region_enabled = true
 region_rect = Rect2(4, 3, 23, 27)
 
 [node name="StarryCloakSprite" type="Sprite2D" parent="." index="1" unique_id=668690817]
+visible = false
 position = Vector2(0, 3)
-scale = Vector2(7, 7)
+scale = Vector2(6.5, 6.5)
 texture = ExtResource("5_412ql")
 
-[node name="PlayerStats" parent="." index="2" unique_id=2105738643]
-ATTACK = 0
+[node name="StarryCloakSprite2" type="Sprite2D" parent="." index="2" unique_id=1444521515]
+visible = false
+position = Vector2(5, 3)
+scale = Vector2(7, 6.9)
+texture = ExtResource("5_412ql")
 
-[node name="ProjectileSpawner" parent="." index="3" unique_id=1973227358]
-projectile_scenes = Array[PackedScene]([ExtResource("4_1qmb8"), ExtResource("7_4yaad")])
+[node name="PlayerStats" parent="." index="3" unique_id=2105738643]
+ATTACK = 0
+ATTACK_COOLDOWN = 0.6
+A1_COOLDOWN = 5.0
+A2_COOLDOWN = 5.0
+
+[node name="ProjectileSpawner" parent="." index="4" unique_id=1973227358]
+projectile_scenes = Array[PackedScene]([ExtResource("5_c7fmj"), ExtResource("7_4yaad")])
 melee_scenes = Array[PackedScene]([ExtResource("5_c7fmj")])
 
-[node name="EnvironmentCollision" parent="." index="5" unique_id=1460140901]
+[node name="EnvironmentCollision" parent="." index="6" unique_id=1460140901]
 position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_55bxo")
 
@@ -50,8 +60,18 @@ shape = SubResource("CapsuleShape2D_55bxo")
 position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_ye1m7")
 
-[node name="DeactivatePassiveTimer" type="Timer" parent="." index="7" unique_id=2030538791]
+[node name="DeactivatePassiveTimer" type="Timer" parent="." index="8" unique_id=2030538791]
 wait_time = 2.5
 one_shot = true
 
+[node name="NewBuffArea" type="Area2D" parent="." index="9" unique_id=1320979380]
+collision_layer = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NewBuffArea" index="0" unique_id=326580203]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_3mukf")
+debug_color = Color(0.78930575, 0.68941677, 0.1534349, 0.41960785)
+
 [connection signal="timeout" from="DeactivatePassiveTimer" to="." method="_on_deactivate_passive_timer_timeout"]
+[connection signal="body_entered" from="NewBuffArea" to="." method="_new_buff"]

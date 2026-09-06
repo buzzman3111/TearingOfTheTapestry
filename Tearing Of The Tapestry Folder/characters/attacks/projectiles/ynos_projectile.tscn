@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" uid="uid://dhih3vqilq8qn" path="res://characters/attacks/projectiles/ynos_projectile.gd" id="1_0xxol"]
 [ext_resource type="Texture2D" uid="uid://d14dk58ivj0py" path="res://assets/art/YnosOnosProjectile.png" id="2_2b8mu"]
+[ext_resource type="PackedScene" uid="uid://cguu0msfnbn3j" path="res://effects/speed.tscn" id="2_q7w4r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sje8v"]
 size = Vector2(44, 95)
 
 [node name="YnosProjectile" type="Node2D" unique_id=322164887]
 script = ExtResource("1_0xxol")
+SLOW_setter = ExtResource("2_q7w4r")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=735508211]
 scale = Vector2(10, 10)
@@ -18,6 +20,7 @@ region_rect = Rect2(24, 10, 4, 10)
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=257295006]
 position = Vector2(0, -46)
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1264478769]
 position = Vector2(0, 1.5)

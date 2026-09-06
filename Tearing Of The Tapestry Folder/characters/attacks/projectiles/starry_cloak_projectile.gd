@@ -7,7 +7,7 @@ const TURN_SPEED: float = 10.0
 
 func _ready() -> void:
 	super._ready()
-	target = _find_nearest_player()
+	target = call_deferred('_find_nearest_player')
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,15 +20,18 @@ func _process(delta: float) -> void:
 		var desired_dir = (target.global_position - self.global_position).normalized()
 		move_dir = move_dir.move_toward(desired_dir, TURN_SPEED * delta).normalized()
 
+
 func _find_nearest_player():
-	var level_children = get_tree().current_scene.get_children() # Will break when creating actual levels
-	var nearest_child = null
-	var nearest_distance = INF
-	for child in level_children:
-		if child.is_in_group('character') and (child != self.OWNER):
-			var child_rel_pos = self.global_position.distance_squared_to(child.global_position)
-			if child_rel_pos < nearest_distance:
-				nearest_child = child
-				nearest_distance = child_rel_pos
+	var possible_targets = GameManager.player_list
 	
-	return nearest_child
+	var nearest_target = null
+	var nearest_target_pos = Vector2(INF, INF)
+	
+	for obj_targetting in possible_targets:
+		var targeting = possible_targets[obj_targetting]
+		if targeting != owner:
+			if (owner.global_position - targeting.global_position).length_squared() < nearest_target_pos.length_squared():
+				nearest_target_pos = owner.global_position - targeting.global_position
+				nearest_target = targeting
+	
+	return nearest_target

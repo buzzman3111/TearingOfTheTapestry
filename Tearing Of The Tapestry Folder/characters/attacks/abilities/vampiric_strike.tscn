@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://21f66ducnsn2"]
 
 [ext_resource type="PackedScene" uid="uid://cv33it1speaiu" path="res://characters/attacks/melee/melee_base.tscn" id="1_880oi"]
-[ext_resource type="Script" uid="uid://c21aoeybkmjrm" path="res://characters/attacks/melee/vampiric_strike.gd" id="2_e5mto"]
+[ext_resource type="Script" uid="uid://c21aoeybkmjrm" path="res://characters/attacks/abilities/vampiric_strike.gd" id="2_e5mto"]
 
 [node name="VampiricStrike" unique_id=476710053 instance=ExtResource("1_880oi")]
 script = ExtResource("2_e5mto")
