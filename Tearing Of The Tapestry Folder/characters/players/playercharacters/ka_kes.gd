@@ -2,9 +2,6 @@ extends PlayerBase
 
 @onready var ult_duration_timer: Timer = $UltDurationTimer
 
-
-var move_dir: Vector2
-
 enum KaKesMelee {A1, Ult1, Ult2, Ult3, Ult4}
 
 @export var A1_damage := 5
@@ -12,7 +9,10 @@ enum KaKesMelee {A1, Ult1, Ult2, Ult3, Ult4}
 @export var ULT_damage := [5, 10, 20, 40]
 @export var ULT_duration := 5.0
 
-@export var BI_setter: PackedScene
+
+const effect_setters := {
+	"BI": preload("res://effects/bardic_inspiration.tscn"),
+}
 
 #var CAN_BACKSTAB := false
 var IS_ULTING: bool = false # Will eventually have form of dread stat changes, so using this controls that
@@ -55,17 +55,7 @@ func _A1() -> void:
 
 
 func _A2() -> void:
-	var BI = self.find_child('BI')	# Bardic inspiration
-	
-	# I would like to eventually change this into a function that sets any effect
-	if BI:
-		BI._add_stacks(self)
-	else:
-		var new_BI = BI_setter.instantiate()
-		new_BI.name = 'BI'
-		self.add_child(new_BI)
-		new_BI.owner = self
-	
+	_set_effect('BI', self)
 	print('Ka Kes A2')
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A2 = true
@@ -73,6 +63,10 @@ func _A2() -> void:
 
 func _ultimate() -> void:
 	print('Ka Kes Ult')
+	
+	STATS.MAX_HP *= 2
+	STATS.HP *= 2
+	print('increase max health to: ', STATS.MAX_HP)
 	ult_duration_timer.start()
 	IS_ULTING = true
 
@@ -81,4 +75,6 @@ func _on_ult_duration_timeout() -> void:
 	print('end ult')
 	IS_ULTING = false
 	current_ult_melee = 1
+	STATS.MAX_HP = 100
+	STATS.HP /= 2
 	CAN_ULT = true # Add to ult charge logic once implemented

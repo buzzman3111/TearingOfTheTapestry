@@ -23,30 +23,32 @@ func _fire_melee(projectile_owner: Node2D,
 	melee.global_position = aim.global_position
 	melee.DURATION = DURATION
 	melee.rotation = rotation
-	melee.OWNER = owner
 	melee.DAMAGE = damage
 	
 	self.add_child(melee)
+	melee.owner = projectile_owner
 
 
 # Creates and adds to scene the projectile at index ability_index
 func _fire_projectile(projectile_owner: Node2D,
 	projectile_index: int, 
 	damage: int = player_stats.PROJECTILE_DAMAGE,
-	rotation: float = aim.rotation) -> void:
+	rotation: float = aim.rotation,
+	proj_range: float = player_stats.PROJECTILE_RANGE,
+	speed: float = player_stats.PROJECTILE_SPEED) -> void:
 	
 	var projectile = projectile_scenes[projectile_index].instantiate()
 	
 	projectile.global_position = aim.global_position
-	projectile.RANGE = player_stats.PROJECTILE_RANGE
-	projectile.SPEED = player_stats.PROJECTILE_SPEED
+	projectile.RANGE = proj_range
+	projectile.SPEED = speed
 	projectile.DAMAGE = damage
-	projectile.OWNER = owner
 	
 	var move_dir = _get_dir(rotation)
 	_apply_dir_rot(projectile, move_dir, rotation)
 	
 	self.add_child(projectile)
+	projectile.owner = projectile_owner
 
 
 # Transforms angle into vector direction

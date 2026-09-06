@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ce3bmu44lufaj"]
+
+[ext_resource type="Script" uid="uid://cm0wmero0cgip" path="res://characters/attacks/projectiles/starry_cloak_projectile.gd" id="1_jcq7k"]
+[ext_resource type="Texture2D" uid="uid://l7hgnjhsiq0x" path="res://assets/art/starryCloakProjectile.png" id="2_lhgup"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbmb8"]
+radius = 8.0
+
+[node name="StarryCloakProjectile" type="Node2D" unique_id=151663665]
+script = ExtResource("1_jcq7k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=455941751]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_lhgup")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1722639868]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1829705223]
+shape = SubResource("CircleShape2D_qbmb8")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

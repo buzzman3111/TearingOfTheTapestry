@@ -1,5 +1,5 @@
 class_name PlayerBase
-extends CharacterBody2D
+extends CharacterBase
 
 # The base code that EACH player will have. Player characters should inherit from 
 # 	this class and overwrite their own functions for thier unique actions
@@ -25,39 +25,36 @@ var CAN_A1 = true
 var CAN_A2 = true
 var CAN_ULT = true
 
+var HAS_HASTE = false
+
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
+var move_dir = Vector2(0,0)
+var aim_dir = Vector2(0,0)
+var base_vel = Vector2(0,0)
 
 
 func _ready() -> void:
-	pass
+	super._ready()
 
-
-func _physics_process(delta: float) -> void:
-	var move_dir = Vector2(0,0)
-	var aim_dir = Vector2(0,0)
-	var base_vel = Vector2(0,0)
+func _controller_logic() -> void:
+	# Gets the direction of the left joystick
+	var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
+	var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
+	move_dir = Vector2(move_dir_x, move_dir_y)
+	if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
+		move_dir = Vector2.ZERO
+	base_vel = move_dir * STATS.SPEED
+	
+	# If we can dash and we press dash, we dash
+	if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_A)
+	or (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_LEFT) > 0)) and CAN_DASH:
+		CAN_DASH = false
+		_dash(move_dir)
 	
 	
-	## Controller
-	if using_controller: # Controller inputs
-		# Gets the direction of the left joystick
-		var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
-		var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
-		move_dir = Vector2(move_dir_x, move_dir_y)
-		if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
-			move_dir = Vector2.ZERO
-		base_vel = move_dir * STATS.SPEED
-		
-		
-		# If we can dash and we press dash, we dash
-		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_A)
-		or (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_LEFT) > 0)) and CAN_DASH:
-			CAN_DASH = false
-			_dash(move_dir)
-		
-		
-		### Attacks
+	### Attacks
+	if IS_CHICKEN == false:
 		var aim_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_X)
 		var aim_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_Y)
 		aim_dir = Vector2(aim_dir_x, aim_dir_y)
@@ -82,21 +79,21 @@ func _physics_process(delta: float) -> void:
 		if Input.is_joy_button_pressed(player_index, JOY_BUTTON_Y) and CAN_ULT:
 			CAN_ULT = false
 			_ultimate()
+
+
+func _keyboard_logic() -> void:
+	# Movement
+	var move_dir_x = Input.get_axis('left', 'right')
+	var move_dir_y = Input.get_axis('up', 'down')
+	move_dir = Vector2(move_dir_x, move_dir_y)
+	base_vel = move_dir * STATS.SPEED
 	
-	## Keyboard/mouse inputs (TEMPORARY, I WANT TO GET RID OF THIS SO BAD BUT ITS SO GOOD FOR WORKING W/OUT A CONTROLLER)
-	else:
-		# Movement
-		var move_dir_x = Input.get_axis('left', 'right')
-		var move_dir_y = Input.get_axis('up', 'down')
-		move_dir = Vector2(move_dir_x, move_dir_y)
-		base_vel = move_dir * STATS.SPEED
-		
-		if Input.is_action_just_pressed('dash') and CAN_DASH:
-			CAN_DASH = false
-			_dash(move_dir)
-		
-		
-		### Attacks
+	if Input.is_action_just_pressed('dash') and CAN_DASH:
+		CAN_DASH = false
+		_dash(move_dir)
+	
+	### Attacks
+	if IS_CHICKEN == false:
 		aim_dir = get_local_mouse_position()
 		aim_node.rotation = aim_dir.angle()
 		
@@ -115,13 +112,29 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed('ultimate') and CAN_ULT:
 			CAN_ULT = false
 			_ultimate()
+
+
+
+func _process(delta: float) -> void:
+	
+	## Controller logic
+	if using_controller: # Controller inputs
+		_controller_logic()
+	
+	## Keyboard/mouse inputs (TEMPORARY, I WANT TO GET RID OF THIS SO BAD BUT ITS SO GOOD FOR WORKING W/OUT A CONTROLLER)
+	else:
+		_keyboard_logic()
 	
 	
 	# The dash velocity decays over time
 	dash_vel = dash_vel.move_toward(Vector2.ZERO, DASH_DECAY*delta)
+	
 	var slow = self.find_child('SLOW')
+	var haste = self.find_child('HASTE')
 	if slow:
-		base_vel *= 1 - slow.effect_strength
+		base_vel *= (1 - slow.effect_strength)
+	if haste:
+		base_vel *= (1 + haste.effect_strength)
 	velocity = base_vel + dash_vel
 	move_and_slide()
 	
@@ -139,8 +152,8 @@ func _physics_process(delta: float) -> void:
 			player_sprite.flip_h = true
 
 
-func _dash(move_dir: Vector2):
-	dash_vel = move_dir.normalized() * STATS.DASH_SPEED
+func _dash(movement_dir: Vector2):
+	dash_vel = movement_dir.normalized() * STATS.DASH_SPEED
 	await get_tree().create_timer(STATS.DASH_COOLDOWN).timeout
 	CAN_DASH = true
 
@@ -155,7 +168,16 @@ func _attack():
 		STATS.attack_type.MELEE:
 			_basic_melee_attack()
 	
-	await get_tree().create_timer(STATS.ATTACK_COOLDOWN).timeout
+	# if slow: increase attack reset cooldown?
+	# if haste: decrease attack reset cooldown?
+	var slow = self.find_child('SLOW')
+	var haste = self.find_child('HASTE')
+	var attack_speed_change = 1
+	if slow:
+		attack_speed_change += slow.effect_strength
+	if haste:
+		attack_speed_change -= haste.effect_strength
+	await get_tree().create_timer(STATS.ATTACK_COOLDOWN * attack_speed_change).timeout
 	CAN_ATTACK = true
 
 func _basic_ranged_attack():
@@ -186,10 +208,10 @@ func _ultimate() -> void:
 
 
 func _take_damage(amount: int) -> void:
-	var barrier = self.find_child('Barrier')
+	var barrier = self.find_child('BARRIER')
 	if barrier:
 		print('nuh uh')
-		barrier.queue_free()
+		barrier._on_effect_duration_timeout()
 	else:
 		STATS.HP -= amount
 		if STATS.HP > STATS.MAX_HP:
@@ -197,11 +219,6 @@ func _take_damage(amount: int) -> void:
 		print('took ', amount, ' damage. HP=', STATS.HP)
 		if STATS.HP <= 0:
 			self._die()
-
-
-func _die() -> void:
-	print('you are dead')
-	self.queue_free()
 
 
 # Checks for effects that increase/decrease attack/ability damage

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://g3ejfl3dxyer"]
+
+[ext_resource type="PackedScene" uid="uid://duydghldf83c" path="res://effects/effect_base.tscn" id="1_axsas"]
+
+[node name="BARRIER" unique_id=1223199067 instance=ExtResource("1_axsas")]
+effect_duration = 2.0
+
+[node name="DurationTimer" parent="." index="0" unique_id=377322170]
+wait_time = 2.0

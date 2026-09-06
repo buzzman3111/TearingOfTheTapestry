@@ -12,11 +12,23 @@ class_name Effect
 var num_stacks: int = 1
 @export var max_stacks: int = 999
 
+var effect_owner: Node = null
+var effect_name: String = ''
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if effect_name and effect_owner:
+		_initialize(effect_name, effect_owner)
+	
 	duration_timer.wait_time = effect_duration
 	duration_timer.start()
+
+# To be called by anything that sets an effect BEFORE adding the effect as a child.
+# 	ensures owner is set before _ready() is called so can set some unique effects easier
+func _initialize(e_name: String, e_owner: Node) -> void:
+	self.name = e_name
+	self.owner = e_owner
+	print('initialize')
 
 
 func _on_effect_duration_timeout() -> void:
@@ -27,8 +39,8 @@ func _on_effect_duration_timeout() -> void:
 
 
 # Call when adding new stacks of 
-func _add_stacks(effect_owner, amount: int = 1) -> void:
-	self.owner = effect_owner
+func _add_stacks(amount: int = 1) -> void:
+	#self.owner = e_owner
 	num_stacks += amount
 	if num_stacks > max_stacks:
 		num_stacks = max_stacks

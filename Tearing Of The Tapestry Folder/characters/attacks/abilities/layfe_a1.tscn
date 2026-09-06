@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://fk2fmtala1b7"]
 
-[ext_resource type="Texture2D" uid="uid://xa6q3unn0cno" path="res://assets/art/KaKesProjectile.png" id="1_he5et"]
-[ext_resource type="Script" uid="uid://bgnh023sn1t8c" path="res://characters/attacks/melee/melee_base.gd" id="1_pw2vf"]
+[ext_resource type="Script" uid="uid://bgnh023sn1t8c" path="res://characters/attacks/melee/melee_base.gd" id="1_ou310"]
+[ext_resource type="Texture2D" uid="uid://xa6q3unn0cno" path="res://assets/art/KaKesProjectile.png" id="2_4yrbf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_he5et"]
 size = Vector2(87.5, 1617)
 
 [node name="Moonbeam" type="Node2D" unique_id=1360801957]
-script = ExtResource("1_pw2vf")
+script = ExtResource("1_ou310")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=839391546]
 self_modulate = Color(8.87978, 11.658543, 0, 1)
 rotation = 1.5707964
 scale = Vector2(53.791027, 15.482995)
-texture = ExtResource("1_he5et")
+texture = ExtResource("2_4yrbf")
 offset = Vector2(-15, 0)
 region_enabled = true
 region_rect = Rect2(1, 13, 30, 5)

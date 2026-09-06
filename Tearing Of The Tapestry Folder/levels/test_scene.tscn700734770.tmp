@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cjawx7g3iihfd"]
+
+[ext_resource type="PackedScene" uid="uid://beay1s1u2i4ak" path="res://characters/players/playercharacters/ka_kes.tscn" id="1_x46hq"]
+[ext_resource type="PackedScene" uid="uid://bivcm6noga6be" path="res://characters/players/playercharacters/ynos_onos.tscn" id="2_ohqux"]
+[ext_resource type="PackedScene" uid="uid://cgno6kthnuq71" path="res://characters/players/playercharacters/layfe.tscn" id="3_a47p7"]
+
+[node name="TestScene" type="Node2D" unique_id=433689384]
+
+[node name="KaKes" parent="." unique_id=961990300 instance=ExtResource("1_x46hq")]
+position = Vector2(425, 283)
+player_index = 3
+
+[node name="YnosOnos" parent="." unique_id=167681896 instance=ExtResource("2_ohqux")]
+position = Vector2(360, 132)
+player_index = 1
+
+[node name="Layfe" parent="." unique_id=1903747234 instance=ExtResource("3_a47p7")]
+position = Vector2(518, 119)
+using_controller = false
