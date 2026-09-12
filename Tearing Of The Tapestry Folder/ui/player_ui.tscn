@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://cqim1cf0qs84r"]
+
+[ext_resource type="Script" uid="uid://v5rmpn5pl56d" path="res://ui/player_ui.gd" id="1_cfom6"]
+
+[node name="PlayerUI" type="MarginContainer" unique_id=722554251]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+script = ExtResource("1_cfom6")
+
+[node name="UIBottom" type="CenterContainer" parent="." unique_id=1661112950]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIBottom" unique_id=1448690333]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="ModuleContr4" type="CenterContainer" parent="UIBottom/HBoxContainer" unique_id=930885129]
+layout_mode = 2
+
+[node name="ModuleCont2" type="VBoxContainer" parent="UIBottom/HBoxContainer" unique_id=531279781]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ModuleCont" type="VBoxContainer" parent="UIBottom/HBoxContainer" unique_id=2032042481]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ModuleCont3" type="VBoxContainer" parent="UIBottom/HBoxContainer" unique_id=1061794557]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ModuleCont5" type="CenterContainer" parent="UIBottom/HBoxContainer" unique_id=1954347569]
+layout_mode = 2
+
+[node name="UISide" type="CenterContainer" parent="." unique_id=1085124682]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UISide" unique_id=1278067369]
+layout_mode = 2
+theme_override_constants/separation = 15

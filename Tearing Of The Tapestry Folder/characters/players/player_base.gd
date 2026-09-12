@@ -1,7 +1,7 @@
 class_name PlayerBase
 extends CharacterBase
 
-# The base code that EACH player will have. Player characters should inherit from 
+# The base code that each PLAYER will have. Player characters should inherit from 
 # 	this class and overwrite their own functions for thier unique actions
 
 @export var player_index = 0
@@ -32,6 +32,12 @@ var dash_vel = Vector2.ZERO
 var move_dir = Vector2(0,0)
 var aim_dir = Vector2(0,0)
 var base_vel = Vector2(0,0)
+
+
+signal update_hp_ui
+signal update_a1_ui
+signal update_a2_ui
+signal update_ult_ui
 
 
 func _ready() -> void:
@@ -219,6 +225,8 @@ func _take_damage(amount: int) -> void:
 		print('took ', amount, ' damage. HP=', STATS.HP)
 		if STATS.HP <= 0:
 			self._die()
+		
+		update_hp_ui.emit(STATS.HP)
 
 
 # Checks for effects that increase/decrease attack/ability damage

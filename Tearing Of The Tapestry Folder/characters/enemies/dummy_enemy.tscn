@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ujeywgh5g3uj" path="res://assets/art/barrel.png" id="1_4i7m7"]
 [ext_resource type="Script" uid="uid://cdqu56mc0se1m" path="res://characters/players/player_base.gd" id="1_7a6a2"]
 [ext_resource type="Script" uid="uid://ccg5sfcw5xh5y" path="res://characters/players/player_stats.gd" id="2_ejxyx"]
+[ext_resource type="Texture2D" uid="uid://l7hgnjhsiq0x" path="res://assets/art/starryCloakProjectile.png" id="3_13rx2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra0cx"]
 radius = 45.0
@@ -18,6 +19,9 @@ scale = Vector2(10, 10)
 texture = ExtResource("1_4i7m7")
 region_enabled = true
 region_rect = Rect2(11, 10, 9, 13)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1575148095]
+texture = ExtResource("3_13rx2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1793949402]
 shape = SubResource("CapsuleShape2D_ra0cx")
