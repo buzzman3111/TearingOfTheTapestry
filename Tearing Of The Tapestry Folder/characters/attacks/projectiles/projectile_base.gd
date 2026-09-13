@@ -1,9 +1,9 @@
 class_name Projectile
 extends Node2D
 
-var RANGE: float
-var SPEED: float
-var DAMAGE: float
+@export var RANGE: float
+@export var SPEED: float
+@export var DAMAGE: float
 #var OWNER: Node2D
 
 var move_dir: Vector2

@@ -21,5 +21,6 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		else:
 			var new_SLOW = effect_setters.get('SLOW').instantiate()
 			new_SLOW.name = 'SLOW'
+			new_SLOW.is_debuff = true
 			body.add_child(new_SLOW)
 			new_SLOW.owner = body

@@ -8,6 +8,7 @@ class_name Effect
 @export var effect_duration: float = 1.0	# How long the effect lasts before removing itself
 @export var effect_strength: float = 1.0 	# If effect applies buff/debuff, this multiplies value
 @export var effect_amount: float = 0.0 		# If effect applies buff/debuff, this adds to the value
+@export var is_debuff: bool = false 	# If true, abilities like dispels/cleanses can strip this effect early
 
 var num_stacks: int = 1
 @export var max_stacks: int = 999
@@ -43,6 +44,15 @@ func _add_stacks(amount: int = 1) -> void:
 	num_stacks += amount
 	if num_stacks > max_stacks:
 		num_stacks = max_stacks
+
+
+# Called by dispel/cleanse-type abilities to strip this effect immediately.
+# 	Returns the number of stacks that were removed so the caller can use that value (eg. for scaled healing)
+func _dispel() -> int:
+	var removed_stacks = num_stacks
+	num_stacks = 0
+	self.queue_free()
+	return removed_stacks
 
 
 # Called by the GameManager to deal damage to owner if applicable

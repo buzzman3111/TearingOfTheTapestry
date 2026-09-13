@@ -36,6 +36,7 @@ unique_stacks: int = 1
 		if unique_duration != INF:
 			new_effect.effect_duration = unique_duration
 		
+		new_effect.num_stacks = unique_stacks
 		new_effect.effect_owner = effect_owner
 		new_effect.effect_name = effect_name
 		
