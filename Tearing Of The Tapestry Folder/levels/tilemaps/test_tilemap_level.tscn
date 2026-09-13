@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cxbdl1dwkdmh6" path="res://Camera.tscn" id="1_pcele"]
 [ext_resource type="PackedScene" uid="uid://bivcm6noga6be" path="res://characters/players/playercharacters/ynos_onos.tscn" id="2_dxyq2"]
 [ext_resource type="PackedScene" uid="uid://beay1s1u2i4ak" path="res://characters/players/playercharacters/ka_kes.tscn" id="4_mer1x"]
+[ext_resource type="PackedScene" uid="uid://cqmhrfbc8ssyl" path="res://characters/players/playercharacters/kevexian.tscn" id="5_ncju5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mer1x"]
 texture = ExtResource("1_m53ys")
@@ -255,3 +256,6 @@ using_controller = false
 [node name="KaKes" parent="." unique_id=5461595 instance=ExtResource("4_mer1x")]
 position = Vector2(2503, 514)
 player_index = 1
+
+[node name="Kevexian" parent="." unique_id=605495632 instance=ExtResource("5_ncju5")]
+position = Vector2(1560, 942)

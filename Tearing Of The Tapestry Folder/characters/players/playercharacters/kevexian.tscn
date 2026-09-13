@@ -13,9 +13,10 @@ height = 140.0
 radius = 38.0
 height = 140.0
 
-[node name="Kevexian" unique_id=961990300 node_paths=PackedStringArray("STATS") instance=ExtResource("1_35dhj")]
+[node name="Kevexian" unique_id=961990300 groups=["player"] instance=ExtResource("1_35dhj")]
 script = ExtResource("2_serf6")
-STATS = NodePath("PlayerStats")
+STATS = Object(Node,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://characters/players/player_stats.gd"),"ATTACK":1,"HP":100,"MAX_HP":100,"MANA":100,"SPEED":300.0,"DASH_SPEED":1000.0,"DASH_COOLDOWN":0.75,"ATTACK_COOLDOWN":0.75,"PROJECTILE_RANGE":750.0,"PROJECTILE_SPEED":1000.0,"PROJECTILE_DAMAGE":1,"A1_COOLDOWN":1.0,"A2_COOLDOWN":1.0,"ULT_COOLDOWN":10.0)
+
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
 texture = ExtResource("2_ytjdu")
