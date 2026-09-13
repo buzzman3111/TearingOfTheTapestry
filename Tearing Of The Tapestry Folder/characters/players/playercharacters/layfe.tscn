@@ -18,7 +18,7 @@ height = 108.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_3mukf"]
 radius = 187.00267
 
-[node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") instance=ExtResource("1_y88wn")]
+[node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["player"] instance=ExtResource("1_y88wn")]
 script = ExtResource("2_55bxo")
 A1_FULL_DAMAGE = 20
 A2_FULL_DAMAGE = 5

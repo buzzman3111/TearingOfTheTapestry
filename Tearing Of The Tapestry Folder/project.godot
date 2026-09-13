@@ -21,6 +21,13 @@ config/icon="res://assets/art/icon.svg"
 [autoload]
 
 GameManager="*uid://cxskdfknwlrd0"
+Settings="*uid://cds3vnh4noawh"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
 
 [global_group]
 

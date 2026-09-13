@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://xv48nkb35def"]
+
+[ext_resource type="Script" uid="uid://ce8yv5163fj5j" path="res://ui/player_ui_module.gd" id="1_0qnal"]
+[ext_resource type="Texture2D" uid="uid://cayf1qcymjtpu" path="res://assets/art/placeholders/hp_bar_outer.png" id="1_tyk3l"]
+[ext_resource type="Texture2D" uid="uid://dr056nasev5rj" path="res://assets/art/placeholders/hp_bar_inner.png" id="2_0qnal"]
+[ext_resource type="Texture2D" uid="uid://cmw4ys5y5xh5d" path="res://assets/art/placeholders/passive_active.png" id="3_jq2i5"]
+[ext_resource type="Texture2D" uid="uid://bufu5vpt5opic" path="res://assets/art/placeholders/a1_active.png" id="4_bs540"]
+[ext_resource type="Texture2D" uid="uid://7a2ok6x44533" path="res://assets/art/placeholders/a2_active.png" id="5_ldrjg"]
+[ext_resource type="Texture2D" uid="uid://ci6ca74177i42" path="res://assets/art/placeholders/ult_active.png" id="6_57n4a"]
+
+[node name="PlayerUIModule" type="CenterContainer" unique_id=296356621]
+script = ExtResource("1_0qnal")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2048241088]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HpBar" type="TextureProgressBar" parent="VBoxContainer" unique_id=24428227]
+layout_mode = 2
+value = 100.0
+texture_under = ExtResource("1_tyk3l")
+texture_progress = ExtResource("2_0qnal")
+
+[node name="Abilities" type="CenterContainer" parent="VBoxContainer" unique_id=1227266882]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Abilities" unique_id=1148299802]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Portrait" type="TextureRect" parent="VBoxContainer/Abilities/HBoxContainer" unique_id=117500457]
+layout_mode = 2
+texture = ExtResource("3_jq2i5")
+
+[node name="PlayerName" type="Label" parent="VBoxContainer/Abilities/HBoxContainer" unique_id=1065055679]
+layout_mode = 2
+text = "Player 1"
+
+[node name="A1Icon" type="TextureRect" parent="VBoxContainer/Abilities/HBoxContainer" unique_id=524261584]
+layout_mode = 2
+texture = ExtResource("4_bs540")
+
+[node name="A2Icon" type="TextureRect" parent="VBoxContainer/Abilities/HBoxContainer" unique_id=311364846]
+layout_mode = 2
+texture = ExtResource("5_ldrjg")
+
+[node name="UltIcon" type="TextureRect" parent="VBoxContainer/Abilities/HBoxContainer" unique_id=1781909233]
+layout_mode = 2
+texture = ExtResource("6_57n4a")

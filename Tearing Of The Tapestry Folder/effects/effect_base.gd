@@ -28,7 +28,6 @@ func _ready() -> void:
 func _initialize(e_name: String, e_owner: Node) -> void:
 	self.name = e_name
 	self.owner = e_owner
-	print('initialize')
 
 
 func _on_effect_duration_timeout() -> void:
@@ -55,4 +54,5 @@ func _damage() -> void:
 
 # Called by functions to change attack/ability effectiveness if applicable
 func _increase_effect(base_val: int) -> int:
+	@warning_ignore("narrowing_conversion")
 	return (roundf(base_val * effect_strength) + effect_amount)

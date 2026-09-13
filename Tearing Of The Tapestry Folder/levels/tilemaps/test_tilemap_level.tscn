@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bfcfx7ikwliar"]
+
+[sub_resource type="TileSet" id="TileSet_n80q2"]
+tile_size = Vector2i(64, 64)
+
+[node name="TestTilemapLevel" type="Node2D" unique_id=1677017553]
+
+[node name="Floor" type="TileMapLayer" parent="." unique_id=330228164]
+tile_set = SubResource("TileSet_n80q2")

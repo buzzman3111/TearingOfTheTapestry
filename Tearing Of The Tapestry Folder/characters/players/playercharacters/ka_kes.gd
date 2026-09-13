@@ -25,11 +25,13 @@ func _ready() -> void:
 
 # Override for ult melee funcitonality
 func _attack():
-	if current_ult_melee > 4:
-		_on_ult_duration_timeout()
-	elif IS_ULTING:
+	if IS_ULTING:
 		projectile_spawner._fire_melee(self, current_ult_melee, _calc_damage(ULT_damage[current_ult_melee-1]))
 		current_ult_melee += 1
+		if current_ult_melee > 4:
+			_on_ult_duration_timeout()
+			ult_duration_timer.stop()
+			print(ult_duration_timer.time_left)
 		await get_tree().create_timer(1.0).timeout
 	else:
 		super._attack()
@@ -48,21 +50,28 @@ func _basic_ranged_attack():
 
 
 func _A1() -> void:
-	projectile_spawner._fire_melee(self, KaKesMelee.A1, _calc_damage(A1_damage))
 	print('Ka Kes A1')
+	update_a1_ui.emit()
+	
+	projectile_spawner._fire_melee(self, KaKesMelee.A1, _calc_damage(A1_damage))
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
 	CAN_A1 = true
+	update_a1_ui.emit()
 
 
 func _A2() -> void:
-	_set_effect('BI', self)
 	print('Ka Kes A2')
+	update_a2_ui.emit()
+	
+	_set_effect('BI', self)
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
+	update_a2_ui.emit()
 	CAN_A2 = true
 
 
 func _ultimate() -> void:
 	print('Ka Kes Ult')
+	update_ult_ui.emit()
 	
 	STATS.MAX_HP *= 2
 	STATS.HP *= 2
@@ -77,4 +86,5 @@ func _on_ult_duration_timeout() -> void:
 	current_ult_melee = 1
 	STATS.MAX_HP = 100
 	STATS.HP /= 2
+	update_ult_ui.emit()
 	CAN_ULT = true # Add to ult charge logic once implemented

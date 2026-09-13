@@ -76,25 +76,29 @@ func _basic_ranged_attack():
 
 
 func _dash(movement_dir: Vector2):
-	if current_form == FORM.FULL:
-		current_form = FORM.NEW
-		self.passive_count = 0
+	if IS_CHICKEN:
+		super._dash(movement_dir)
 	else:
-		current_form = FORM.FULL
-	
-	print(current_form)
-	
-	_set_effect('SLOW', self, self, false, DASH_WINDUP_DURATION)
-	
-	await get_tree().create_timer(DASH_WINDUP_DURATION).timeout
-	
-	self.global_position += movement_dir.normalized() * (STATS.DASH_SPEED/4)
-	
-	await get_tree().create_timer(STATS.DASH_COOLDOWN - DASH_WINDUP_DURATION).timeout
-	CAN_DASH = true
+		if current_form == FORM.FULL:
+			current_form = FORM.NEW
+			self.passive_count = 0
+		else:
+			current_form = FORM.FULL
+		
+		print(current_form)
+		
+		_set_effect('SLOW', self, self, false, DASH_WINDUP_DURATION)
+		
+		await get_tree().create_timer(DASH_WINDUP_DURATION).timeout
+		
+		self.global_position += movement_dir.normalized() * (STATS.DASH_SPEED/4)
+		
+		await get_tree().create_timer(STATS.DASH_COOLDOWN - DASH_WINDUP_DURATION).timeout
+		CAN_DASH = true
 
 
 func _A1() -> void:
+	update_a1_ui.emit()
 	match current_form:
 		FORM.FULL:
 			print('full a1')
@@ -118,10 +122,12 @@ func _A1() -> void:
 			new_buff_area.monitoring = false
 	
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
+	update_a1_ui.emit()
 	CAN_A1 = true
 
 
 func _A2() -> void:
+	update_a2_ui.emit()
 	match current_form:
 		FORM.FULL:
 			print('full a2')
@@ -144,6 +150,7 @@ func _A2() -> void:
 			new_buff_area.monitoring = false
 	
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
+	update_a1_ui.emit()
 	CAN_A2 = true
 
 
