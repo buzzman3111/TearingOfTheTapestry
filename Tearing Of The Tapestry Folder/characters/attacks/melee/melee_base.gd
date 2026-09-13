@@ -3,8 +3,8 @@ extends Node2D
 
 # General-use melee attack object
 #var OWNER: Node2D
-var DAMAGE: int
-var DURATION: float
+@export var DAMAGE: int
+@export var DURATION: float
 
 @onready var hitbox: Area2D = $Hitbox
 

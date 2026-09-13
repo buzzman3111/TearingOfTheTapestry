@@ -13,10 +13,18 @@ height = 140.0
 radius = 38.0
 height = 140.0
 
-[node name="Kevexian" unique_id=961990300 groups=["player"] instance=ExtResource("1_35dhj")]
-script = ExtResource("2_serf6")
-STATS = Object(Node,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://characters/players/player_stats.gd"),"ATTACK":1,"HP":100,"MAX_HP":100,"MANA":100,"SPEED":300.0,"DASH_SPEED":1000.0,"DASH_COOLDOWN":0.75,"ATTACK_COOLDOWN":0.75,"PROJECTILE_RANGE":750.0,"PROJECTILE_SPEED":1000.0,"PROJECTILE_DAMAGE":1,"A1_COOLDOWN":1.0,"A2_COOLDOWN":1.0,"ULT_COOLDOWN":10.0)
+[sub_resource type="CircleShape2D" id="CircleShape2D_cq8pp"]
+radius = 417.20258
 
+[node name="Kevexian" unique_id=961990300 node_paths=PackedStringArray("STATS") instance=ExtResource("1_35dhj")]
+script = ExtResource("2_serf6")
+A1_BASE_HEAL = 10
+A1_HEAL_PER_STACK = 2
+A2_HB_STACKS = 1
+A2_EFFECT_RADIUS = 300.0
+ULT_HB_STACKS = 5
+ULT_HB_RADIUS = 150.0
+STATS = NodePath("PlayerStats")
 
 [node name="PlayerSprite" parent="." index="0" unique_id=566503953]
 texture = ExtResource("2_ytjdu")
@@ -32,3 +40,10 @@ shape = SubResource("CapsuleShape2D_ytjdu")
 
 [node name="CollisionShape2D2" parent="Hurtbox" parent_id_path=PackedInt32Array(269890551) index="0" unique_id=345707070]
 shape = SubResource("CapsuleShape2D_keu1b")
+
+[node name="BuffArea" type="Area2D" parent="." index="6" unique_id=649488386]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuffArea" index="0" unique_id=1417929599]
+shape = SubResource("CircleShape2D_cq8pp")
+debug_color = Color(0.78930575, 0.68941677, 0.1534349, 0.41960785)
