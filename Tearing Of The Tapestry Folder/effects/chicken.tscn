@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://duydghldf83c" path="res://effects/effect_base.tscn" id="1_yj6ha"]
 [ext_resource type="Script" uid="uid://c58e3dnabh0e3" path="res://effects/chicken.gd" id="2_w2plx"]
 
-[node name="Chicken" unique_id=1223199067 instance=ExtResource("1_yj6ha")]
+[node name="CHICKEN" unique_id=1223199067 instance=ExtResource("1_yj6ha")]
 script = ExtResource("2_w2plx")
 effect_duration = 5.0
 effect_strength = 0.0

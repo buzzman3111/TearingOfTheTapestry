@@ -9,7 +9,7 @@
 radius = 45.0
 height = 132.0
 
-[node name="DummyEnemy" type="CharacterBody2D" unique_id=1128807831 node_paths=PackedStringArray("STATS")]
+[node name="DummyEnemy" type="CharacterBody2D" unique_id=1128807831 node_paths=PackedStringArray("STATS") groups=["enemy"]]
 collision_mask = 4
 script = ExtResource("1_7a6a2")
 STATS = NodePath("Stats")

@@ -44,6 +44,7 @@ unique_stacks: int = 1
 		if does_damage:
 			GameManager.connect('damage_tick', new_effect._damage)
 
+
 func _die() -> void:
 	print(self.name, ' ate shit')
 	GameManager.player_list.erase(self.name)

@@ -24,11 +24,11 @@ size_flags_vertical = 8
 
 [node name="KaKes" parent="." unique_id=961990300 groups=["player"] instance=ExtResource("1_x46hq")]
 position = Vector2(461, 634)
-using_controller = false
+player_index = 1
 
 [node name="YnosOnos" parent="." unique_id=167681896 groups=["player"] instance=ExtResource("2_ohqux")]
 position = Vector2(614, 352)
-player_index = 3
+using_controller = false
 
 [node name="Layfe" parent="." unique_id=1903747234 groups=["player"] instance=ExtResource("3_a47p7")]
 position = Vector2(998, 317)

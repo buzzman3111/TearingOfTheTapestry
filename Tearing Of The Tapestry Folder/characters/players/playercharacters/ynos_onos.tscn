@@ -13,7 +13,7 @@ height = 90.0
 radius = 30.0
 height = 100.0
 
-[node name="YnosOnos" unique_id=961990300 node_paths=PackedStringArray("STATS") instance=ExtResource("1_dqnst")]
+[node name="YnosOnos" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["player"] instance=ExtResource("1_dqnst")]
 script = ExtResource("2_35v2c")
 STATS = NodePath("PlayerStats")
 
