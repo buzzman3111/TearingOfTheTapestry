@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqim1cf0qs84r"]
 
-[ext_resource type="Script" uid="uid://v5rmpn5pl56d" path="res://ui/player_ui.gd" id="1_cfom6"]
+[ext_resource type="Script" uid="uid://v5rmpn5pl56d" path="res://ui/gamplay_ui/player_ui.gd" id="1_cfom6"]
 
 [node name="PlayerUI" type="MarginContainer" unique_id=722554251]
 anchors_preset = 15

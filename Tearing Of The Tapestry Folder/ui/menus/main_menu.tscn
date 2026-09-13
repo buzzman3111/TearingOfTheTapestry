@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://d0dibfr5csda3"]
+
+[ext_resource type="Texture2D" uid="uid://mw7j7gjgx8pp" path="res://assets/That one meme (With sexy lines).jpg" id="1_5oih7"]
+[ext_resource type="Theme" uid="uid://c7luenhbmysu4" path="res://ui/menus/main_menu_theme.tres" id="3_5ssi0"]
+
+[node name="MainMenu" type="Control" unique_id=657636478]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_5ssi0")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=942568257]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5oih7")
+
+[node name="Panel" type="Panel" parent="." unique_id=683959359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=2096936352]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=984134927]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=304132743]
+layout_mode = 2
+text = "The Tearing of the Tapestry"
+
+[node name="StartGame" type="Button" parent="CenterContainer/VBoxContainer" unique_id=992330008]
+layout_mode = 2
+text = "Start"
+
+[node name="Encyclopedia" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1197462737]
+layout_mode = 2
+text = "Encyclopedia"
+
+[node name="Settings" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2125334834]
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer" unique_id=36122155]
+layout_mode = 2
+text = "Exit"

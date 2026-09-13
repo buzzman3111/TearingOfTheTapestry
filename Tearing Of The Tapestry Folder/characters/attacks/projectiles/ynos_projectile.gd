@@ -8,6 +8,7 @@ func _ready() -> void:
 	super._ready()
 	IS_PIERCING = true
 
+
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if (body.is_in_group('player')) and (body.name != 'YnosOnos'):
 		print('hit: ', body.name)

@@ -1,6 +1,6 @@
 extends MarginContainer
 
-var player_ui_module = preload("res://ui/player_ui_module.tscn")
+var player_ui_module = preload("res://ui/gamplay_ui/player_ui_module.tscn")
 
 @onready var module_cont_side: VBoxContainer = $UISide/VBoxContainer
 
