@@ -7,6 +7,9 @@ const damage_tick_time: float = 1.0
 var player_list = Dictionary()
 var enemy_list = Dictionary()
 
+# Tracks dead players: player_name -> time_died_ms (for revive tracking)
+var dead_player_list = Dictionary()
+
 signal damage_tick
 
 # Called when the node enters the scene tree for the first time.

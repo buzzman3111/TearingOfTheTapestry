@@ -27,6 +27,8 @@ var CAN_ULT = true
 
 var HAS_HASTE = false
 
+var IS_DEAD = false
+
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
 var move_dir = Vector2(0,0)
@@ -44,23 +46,25 @@ func _ready() -> void:
 	super._ready()
 
 func _controller_logic() -> void:
-	# Gets the direction of the left joystick
-	var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
-	var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
-	move_dir = Vector2(move_dir_x, move_dir_y)
-	if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
-		move_dir = Vector2.ZERO
-	base_vel = move_dir * STATS.SPEED
-	
-	# If we can dash and we press dash, we dash
-	if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_A)
-	or (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_LEFT) > 0)) and CAN_DASH:
-		CAN_DASH = false
-		_dash(move_dir)
+
+	if IS_DEAD == false:
+		# Gets the direction of the left joystick
+		var move_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_X)
+		var move_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_LEFT_Y)
+		move_dir = Vector2(move_dir_x, move_dir_y)
+		if move_dir.length() < DEADZONE: # This check adds some deadzone to the joystick
+			move_dir = Vector2.ZERO
+		base_vel = move_dir * STATS.SPEED
+		
+		# If we can dash and we press dash, we dash
+		if (Input.is_joy_button_pressed(player_index, JOY_BUTTON_A)
+		or (Input.get_joy_axis(player_index, JOY_AXIS_TRIGGER_LEFT) > 0)) and CAN_DASH:
+			CAN_DASH = false
+			_dash(move_dir)
 	
 	
 	### Attacks
-	if IS_CHICKEN == false:
+	if IS_CHICKEN == false && IS_DEAD == false:
 		var aim_dir_x = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_X)
 		var aim_dir_y = Input.get_joy_axis(player_index, JOY_AXIS_RIGHT_Y)
 		aim_dir = Vector2(aim_dir_x, aim_dir_y)
@@ -89,17 +93,18 @@ func _controller_logic() -> void:
 
 func _keyboard_logic() -> void:
 	# Movement
-	var move_dir_x = Input.get_axis('left', 'right')
-	var move_dir_y = Input.get_axis('up', 'down')
-	move_dir = Vector2(move_dir_x, move_dir_y)
-	base_vel = move_dir * STATS.SPEED
+	if IS_DEAD == false:
+		var move_dir_x = Input.get_axis('left', 'right')
+		var move_dir_y = Input.get_axis('up', 'down')
+		move_dir = Vector2(move_dir_x, move_dir_y)
+		base_vel = move_dir * STATS.SPEED
 	
-	if Input.is_action_just_pressed('dash') and CAN_DASH:
-		CAN_DASH = false
-		_dash(move_dir)
+		if Input.is_action_just_pressed('dash') and CAN_DASH:
+			CAN_DASH = false
+			_dash(move_dir)
 	
 	### Attacks
-	if IS_CHICKEN == false:
+	if IS_CHICKEN == false && IS_DEAD == false:
 		aim_dir = get_local_mouse_position()
 		aim_node.rotation = aim_dir.angle()
 		
@@ -227,6 +232,32 @@ func _take_damage(amount: int) -> void:
 			self._die()
 		
 		update_hp_ui.emit(STATS.HP)
+
+#Override character function
+func _die() -> void:
+	IS_DEAD = true
+	velocity = Vector2.ZERO
+	base_vel = Vector2.ZERO
+	dash_vel = Vector2.ZERO
+	GameManager.dead_player_list[self.name] = Time.get_ticks_msec()
+	print(self.name, ' ate mega shit')
+
+
+# Revive this player at their current location
+func _revive() -> void:
+	IS_DEAD = false
+	GameManager.dead_player_list.erase(self.name)
+	# Reset HP to max
+	STATS.HP = STATS.MAX_HP 
+	# Reset velocity and movement state
+	velocity = Vector2.ZERO
+	base_vel = Vector2.ZERO
+	dash_vel = Vector2.ZERO
+	# Ensure sprite is visible
+	if player_sprite:
+		player_sprite.show()
+	update_hp_ui.emit(STATS.HP)
+	print(self.name, ' has been revived')
 
 
 # Checks for effects that increase/decrease attack/ability damage
