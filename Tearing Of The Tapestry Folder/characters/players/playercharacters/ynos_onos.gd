@@ -127,6 +127,7 @@ func _is_valid_A1_target(character_node) -> bool:
 ### Find nearest player and give them a BI stack
 func _A1() -> void:
 	print('Ynos A1')
+	update_a1_ui.emit()
 	var nearest_player = _find_nearest_player()
 	
 	if nearest_player == null:
@@ -139,6 +140,7 @@ func _A1() -> void:
 	print('gave 1 BI to: ', nearest_player.name)
 	
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
+	update_a1_ui.emit()
 	CAN_A1 = true
 
 
@@ -162,6 +164,7 @@ func _find_nearest_player():
 ## Give self 1 Healing Aura stack
 func _A2() -> void:
 	print('Ynos A2')
+	update_a2_ui.emit()
 	
 	if IS_CLONE:
 		_set_effect('HA', self, self.owner, true)
@@ -169,17 +172,20 @@ func _A2() -> void:
 		_set_effect('HA', self, self, true)
 	
 	await get_tree().create_timer(STATS.A1_COOLDOWN).timeout
+	update_a2_ui.emit()
 	CAN_A2 = true
 
 
 ## Create 2 clones of self with same control inputs as self
 func _ultimate() -> void:
 	print("Ynos Ult")
+	update_ult_ui.emit()
 	if not IS_CLONE:
 		_instantiate_clone(0)
 		_instantiate_clone(1)
 	
 	await get_tree().create_timer(STATS.ULT_COOLDOWN).timeout
+	update_ult_ui.emit()
 	CAN_ULT = true
 
 

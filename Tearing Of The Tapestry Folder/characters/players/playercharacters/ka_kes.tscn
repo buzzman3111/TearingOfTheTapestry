@@ -18,7 +18,7 @@ height = 102.0
 radius = 33.0
 height = 124.0
 
-[node name="KaKes" unique_id=961990300 node_paths=PackedStringArray("STATS") instance=ExtResource("1_aq6j0")]
+[node name="KaKes" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["player"] instance=ExtResource("1_aq6j0")]
 script = ExtResource("2_uey06")
 A1_damage = 5
 ULT_damage = [6, 12, 24, 48]

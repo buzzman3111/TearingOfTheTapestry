@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cxbdl1dwkdmh6"]
+
+[ext_resource type="Script" uid="uid://coxtf3ieedo1c" path="res://levels/camera_2d.gd" id="1_cr4wk"]
+[ext_resource type="PackedScene" uid="uid://cqim1cf0qs84r" path="res://ui/gamplay_ui/player_ui.tscn" id="2_himew"]
+
+[node name="Camera2D" type="Camera2D" unique_id=681243658]
+z_as_relative = false
+script = ExtResource("1_cr4wk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=748184778]
+layer = 0
+
+[node name="PlayerUI" parent="CanvasLayer" unique_id=722554251 instance=ExtResource("2_himew")]
+size_flags_vertical = 8

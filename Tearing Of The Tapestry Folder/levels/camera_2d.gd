@@ -10,14 +10,19 @@ var timer := 0.0
 @export var min_zoom := 0.5
 @export var max_zoom := 10.0
 
-@export var screen_padding := 500.0
+@export var screen_padding := 750.0
 
 var target_position := Vector2.ZERO
 var target_zoom := 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	## Set camera position at target_position instantly?
+	#var character_list = GameManager.player_list
+	#character_list.merge(GameManager.enemy_list)
+	#_update_camera(character_list)
+	#self.position = target_position
+	pass
 
 
 

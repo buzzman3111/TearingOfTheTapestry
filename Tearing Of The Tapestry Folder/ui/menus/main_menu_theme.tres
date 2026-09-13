@@ -1,0 +1,11 @@
+[gd_resource type="Theme" format=3 uid="uid://c7luenhbmysu4"]
+
+[ext_resource type="FontFile" uid="uid://3udjdjpu6icp" path="res://assets/fonts/highcrest-personal-use.regular.ttf" id="1_3q2nn"]
+[ext_resource type="FontFile" uid="uid://dda6rk7snhl76" path="res://assets/fonts/avqest.regular.ttf" id="1_ay3lo"]
+
+[resource]
+Button/font_sizes/font_size = 80
+Button/fonts/font = ExtResource("1_ay3lo")
+Label/font_sizes/font_size = 100
+Label/fonts/font = ExtResource("1_3q2nn")
+VBoxContainer/constants/separation = 15
