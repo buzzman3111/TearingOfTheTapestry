@@ -37,6 +37,7 @@ func _A2() -> void:
 	update_a2_ui.emit()
 	CAN_A2 = true
 
+
 # Strips all dispellable negative effects from every character (ally or enemy) inside
 # 	the Buff Area, then heals allies in range for a base amount plus a bonus per stack removed
 func _cleanse_buff_area() -> void:
@@ -65,7 +66,8 @@ func _cleanse_buff_area() -> void:
 	
 	for ally in allies_in_range:
 		ally._take_damage(-heal_amount)
-	
+
+
 # Enables allies in buff area to inflict holy burn stacks on enemies within A2_EFFECT_RADIUS
 func _apply_holy_burn_aura() -> void:
 	await get_tree().create_timer(BUFF_AREA_DETECTION_WINDOW).timeout
@@ -97,6 +99,7 @@ func _strip_negative_effects(body: Node) -> int:
 		if child is Effect and child.is_debuff:
 			stacks_removed += child._dispel()
 	return stacks_removed
+
 
 func _ultimate() -> void:
 	update_ult_ui.emit()
