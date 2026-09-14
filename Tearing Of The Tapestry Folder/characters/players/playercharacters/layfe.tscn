@@ -16,7 +16,7 @@ radius = 30.0
 height = 108.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3mukf"]
-radius = 187.00267
+radius = 372.0336
 
 [node name="Layfe" unique_id=961990300 node_paths=PackedStringArray("STATS") groups=["player"] instance=ExtResource("1_y88wn")]
 script = ExtResource("2_55bxo")
@@ -49,7 +49,7 @@ A1_COOLDOWN = 5.0
 A2_COOLDOWN = 5.0
 
 [node name="ProjectileSpawner" parent="." index="4" unique_id=1973227358]
-projectile_scenes = Array[PackedScene]([ExtResource("5_c7fmj"), ExtResource("7_4yaad")])
+projectile_scenes = Array[PackedScene]([ExtResource("7_4yaad"), ExtResource("7_4yaad"), ExtResource("5_c7fmj")])
 melee_scenes = Array[PackedScene]([ExtResource("5_c7fmj")])
 
 [node name="EnvironmentCollision" parent="." index="6" unique_id=1460140901]
@@ -71,7 +71,7 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NewBuffArea" index="0" unique_id=326580203]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_3mukf")
-debug_color = Color(0.78930575, 0.68941677, 0.1534349, 0.41960785)
+debug_color = Color(0.79, 0.694015, 0.15010001, 0.16862746)
 
 [connection signal="timeout" from="DeactivatePassiveTimer" to="." method="_on_deactivate_passive_timer_timeout"]
 [connection signal="body_entered" from="NewBuffArea" to="." method="_new_buff"]

@@ -150,7 +150,7 @@ func _A2() -> void:
 			new_buff_area.monitoring = false
 	
 	await get_tree().create_timer(STATS.A2_COOLDOWN).timeout
-	update_a1_ui.emit()
+	update_a2_ui.emit()
 	CAN_A2 = true
 
 
@@ -164,6 +164,7 @@ func _deactivate_A2(uptime: float):
 
 
 func _ultimate() -> void:
+	update_ult_ui.emit()
 	match current_form:
 		FORM.FULL:
 			print('full ult')
@@ -183,11 +184,11 @@ func _ultimate() -> void:
 			print('new ult')
 	
 	await get_tree().create_timer(STATS.ULT_COOLDOWN).timeout
+	update_ult_ui.emit()
 	CAN_ULT = true
 
 
 func _new_buff(body: Node2D) -> void:
-	print(body)
 	if body.is_in_group('player'):
 		match CURRENT_NEW_BUFF:
 			NEW_ABILITY_BUFF_TYPE.BARRIER:

@@ -2,7 +2,7 @@ extends Resource
 
 # So I wrote this thing BEFORE I read all the built-in variables for the 
 # 	functions that require joy buttons/axis so we don't use this in the 
-# 	CharacterBase script anymore xD
+# 	PlayerBase script anymore xD
 # However, I'm keeping this since it can be used for keybind settings
 # 	or repurposed into general settings later 🍔
 
