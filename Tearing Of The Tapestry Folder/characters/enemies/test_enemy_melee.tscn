@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bsdbjqiypoq4s"]
+
+[ext_resource type="Script" uid="uid://bx7wi0yglyulx" path="res://characters/enemies/simple_melee_enemy.gd" id="1_dbwp6"]
+[ext_resource type="Texture2D" uid="uid://ujeywgh5g3uj" path="res://assets/art/barrel.png" id="2_hk6qx"]
+[ext_resource type="Script" uid="uid://ccg5sfcw5xh5y" path="res://characters/players/player_stats.gd" id="3_0p0ww"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f84e1"]
+radius = 45.0
+height = 132.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1lkrk"]
+radius = 95.189285
+
+[node name="CharacterBase" type="CharacterBody2D" unique_id=1719740849 groups=["enemy"]]
+script = ExtResource("1_dbwp6")
+knockback_strength = 1000.0
+metadata/_custom_type_script = "uid://cj30xvy6tnuln"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1468069183]
+scale = Vector2(10, 10)
+texture = ExtResource("2_hk6qx")
+region_enabled = true
+region_rect = Rect2(11, 10, 9, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=807256982]
+shape = SubResource("CapsuleShape2D_f84e1")
+
+[node name="DamageArea" type="Area2D" parent="." unique_id=225894620]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=410504777]
+shape = SubResource("CircleShape2D_1lkrk")
+
+[node name="Stats" type="Node" parent="." unique_id=1307395028]
+script = ExtResource("3_0p0ww")
+HP = 0
+PROJECTILE_DAMAGE = 5
