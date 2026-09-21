@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 	
 	if timer >= camera_update_interval:
 		timer = 0.0
-		var character_list = GameManager.player_list.duplicate()
+		var character_list = GameManager.player_list
 		character_list.merge(GameManager.enemy_list)
 		_update_camera(character_list)
 	
