@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 var IS_CHICKEN = false
 
+var IS_DEAD = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Add this to a level setup function when this character is added to a level
