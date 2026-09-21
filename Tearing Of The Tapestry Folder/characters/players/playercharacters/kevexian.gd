@@ -72,27 +72,12 @@ func _cleanse_buff_area() -> void:
 func _apply_holy_burn_aura() -> void:
 	await get_tree().create_timer(BUFF_AREA_DETECTION_WINDOW).timeout
 	
-	var allies_in_range: Array = []
-	for body in buff_area.get_overlapping_bodies():
-		if body.is_in_group('player'):
-			allies_in_range.append(body)
-	
-	if allies_in_range.is_empty():
-		return
-	
-	# For each ally, apply holy burn to nearby enemies
-	# TODO: Change back to enemies
-	for ally in allies_in_range:
-		#for enemy_name in GameManager.enemy_list:
-		for player_name in GameManager.player_list:
-			#var enemy = GameManager.enemy_list[enemy_name]
-			var enemy = GameManager.player_list[player_name]
-			if enemy and ally.global_position.distance_to(enemy.global_position) <= A2_EFFECT_RADIUS:
+	for enemy_name in GameManager.enemy_list:
+		var enemy = GameManager.enemy_list[enemy_name]
+		if is_instance_valid(enemy):
+			var distance = global_position.distance_to(enemy.global_position)
+			if distance <= A2_EFFECT_RADIUS:
 				_set_effect('HOLY BURN', enemy, enemy, false, INF, A2_HB_STACKS)
-
-
-# Removes all dispellable effects (holy burn, bleed, poison, burn, slowed, haste, weakened, etc.)
-# 	from the given character and returns the total number of stacks that were removed
 func _strip_negative_effects(body: Node) -> int:
 	var stacks_removed := 0
 	for child in body.get_children():
@@ -129,17 +114,13 @@ func _ultimate() -> void:
 
 
 # Apply holy burn to enemies within ULT_HB_RADIUS of the given position
-# Excludes the source_ally so they don't burn themselves
+# Excludes the revived ally so they don't burn themselves
 # stack_amount: number of stacks to apply (10 = instant detonation at max damage)
 func _apply_ult_holy_burn(from_position: Vector2, source_ally: Node, stack_amount: int) -> void:
-	print('Applying ult holy burn from position: ', from_position, ' with radius: ', ULT_HB_RADIUS, ' stacks: ', stack_amount)
-	for player_name in GameManager.player_list:
-		var enemy = GameManager.player_list[player_name]
-		if enemy:
+	var source_name = source_ally.name if is_instance_valid(source_ally) else ""
+	for enemy_name in GameManager.enemy_list:
+		var enemy = GameManager.enemy_list[enemy_name]
+		if is_instance_valid(enemy):
 			var distance = from_position.distance_to(enemy.global_position)
-			print('  Checking ', enemy.name, ' at distance ', distance)
-			if enemy != source_ally and distance <= ULT_HB_RADIUS:
-				print('    Applying ', stack_amount, ' holy burn stacks to ', enemy.name)
+			if enemy.name != source_name and distance <= ULT_HB_RADIUS:
 				_set_effect('HOLY BURN', enemy, enemy, false, INF, stack_amount)
-			elif enemy == source_ally:
-				print('    Skipping source ally: ', enemy.name)

@@ -8,14 +8,15 @@ radius = 150.0
 
 [node name="HOLY_BURN" unique_id=405231062 groups=["effects"] instance=ExtResource("1_base")]
 script = ExtResource("1_lfvjj")
-damage = 0.0
-effect_duration = 3.0
-max_stacks = 10
-is_debuff = true
 damage_per_stack = 5.0
 max_bomb_stacks = 10
+tick_damage_per_stack = 1.0
+effect_duration = 3.0
+is_debuff = true
+max_stacks = 10
 
 [node name="CollisionArea" type="Area2D" parent="." index="1" unique_id=1664190254]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea" index="0" unique_id=67517282]
 shape = SubResource("CircleShape2D_lfvjj")
+debug_color = Color(0.9231927, 0.943428, 0.58620363, 0.41960785)

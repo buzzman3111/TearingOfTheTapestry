@@ -49,7 +49,10 @@ func _update_camera(character_list: Dictionary) -> void:
 	var max_pos := Vector2(-INF, -INF)
 	
 	for character in character_list:
-		var pos = character_list[character].position
+		var char_obj = character_list[character]
+		if not is_instance_valid(char_obj):
+			continue
+		var pos = char_obj.position
 		
 		min_pos.x = min(min_pos.x, pos.x)
 		min_pos.y = min(min_pos.y, pos.y)

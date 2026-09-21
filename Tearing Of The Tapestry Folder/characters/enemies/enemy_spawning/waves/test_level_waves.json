@@ -1,0 +1,42 @@
+{
+  "spawner_1": {
+    "spawn_radius": 200,
+    "waves": [
+      {
+        "spawn_delay": 0.5,
+        "wave_start_delay": 0.0,
+        "enemies": [
+          {
+            "scene": "test_enemy_melee",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "spawn_delay": 0.3,
+        "wave_start_delay": 1.0,
+        "enemies": [
+          {
+            "scene": "test_enemy_melee",
+            "count": 4
+          }
+        ]
+      }
+    ]
+  },
+  "spawner_2": {
+    "spawn_radius": 150,
+    "waves": [
+      {
+        "spawn_delay": 0.5,
+        "wave_start_delay": 0.0,
+        "enemies": [
+          {
+            "scene": "test_enemy_melee",
+            "count": 3
+          }
+        ]
+      }
+    ]
+  }
+}

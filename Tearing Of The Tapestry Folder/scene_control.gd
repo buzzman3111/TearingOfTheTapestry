@@ -14,6 +14,9 @@ func _handle_level_change(chapter: String, level: String) -> void:
 	print('Changed scene to ' + chapter + ': ' + level)
 	
 	var level_scene = load('res://levels/' + chapter.to_lower() + level.to_lower() + '.tscn')
+	if level_scene == null:
+		push_error('Level does not exist')
+		return
 	var next_level = level_scene.instantiate()
 	self.add_child(next_level)
 	current_level.queue_free()

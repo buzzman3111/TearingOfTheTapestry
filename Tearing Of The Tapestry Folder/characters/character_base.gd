@@ -48,7 +48,10 @@ unique_stacks: int = 1
 
 func _die() -> void:
 	print(self.name, ' ate shit')
-	GameManager.player_list.erase(self.name)
+	if (self.is_in_group('player') ):
+		GameManager.player_list.erase(self.name)
+	else:
+		GameManager.enemy_list.erase(self.name)
 	self.queue_free()
 
 
