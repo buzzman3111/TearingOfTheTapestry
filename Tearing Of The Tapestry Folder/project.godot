@@ -15,6 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="TearingOfTheTapestryFolder"
+run/main_scene="uid://b8l0crm745sm6"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/art/icon.svg"
 
@@ -28,6 +29,7 @@ Settings="*uid://cds3vnh4noawh"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=2
+window/stretch/mode="canvas_items"
 
 [global_group]
 
