@@ -27,8 +27,6 @@ var CAN_ULT = true
 
 var HAS_HASTE = false
 
-var IS_DEAD = false
-
 # Changed by the movement logic
 var dash_vel = Vector2.ZERO
 var move_dir = Vector2(0,0)
