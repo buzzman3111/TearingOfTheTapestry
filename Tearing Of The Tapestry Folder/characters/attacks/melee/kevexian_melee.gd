@@ -16,11 +16,11 @@ func _ready() -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	# This will need to change to player eventually
-	if (body.is_in_group('player')) and (body != owner):
+	# This will need to change to enemy eventually
+	if (body.is_in_group('enemy')) and (body != owner):
 		print('hit: ', body)
 		print('owner: ', owner)
-		body._take_damage(self.DAMAGE)
+		body._take_damage(self.DAMAGE, owner.global_position)
 		
 		var holy_burn = body.find_child('HOLY BURN')
 		if holy_burn:
