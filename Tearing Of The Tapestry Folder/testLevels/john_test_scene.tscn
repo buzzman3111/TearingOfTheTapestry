@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bwfdu4oe1olqv"]
 
-[ext_resource type="Script" uid="uid://coxtf3ieedo1c" path="res://levels/camera_2d.gd" id="1_dogs0"]
-[ext_resource type="PackedScene" uid="uid://cqim1cf0qs84r" path="res://ui/player_ui.tscn" id="2_rimb1"]
+[ext_resource type="Script" uid="uid://coxtf3ieedo1c" path="res://level_camera.gd" id="1_dogs0"]
+[ext_resource type="PackedScene" uid="uid://cqim1cf0qs84r" path="res://ui/gamplay_ui/player_ui.tscn" id="2_rimb1"]
 [ext_resource type="PackedScene" uid="uid://beay1s1u2i4ak" path="res://characters/players/playercharacters/ka_kes.tscn" id="3_kg7vk"]
 [ext_resource type="PackedScene" uid="uid://bivcm6noga6be" path="res://characters/players/playercharacters/ynos_onos.tscn" id="4_e0rdr"]
 [ext_resource type="PackedScene" uid="uid://cgno6kthnuq71" path="res://characters/players/playercharacters/layfe.tscn" id="5_tyfc2"]

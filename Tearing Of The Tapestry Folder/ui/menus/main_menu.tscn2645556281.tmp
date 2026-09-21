@@ -1,0 +1,306 @@
+[gd_scene format=3 uid="uid://d0dibfr5csda3"]
+
+[ext_resource type="Texture2D" uid="uid://mw7j7gjgx8pp" path="res://assets/That one meme (With sexy lines).jpg" id="1_5oih7"]
+[ext_resource type="Script" uid="uid://b6u7tsgaxxj2u" path="res://ui/menus/main_menu.gd" id="2_1njj5"]
+[ext_resource type="Texture2D" uid="uid://byeujkrsvsmxa" path="res://assets/art/icon.svg" id="3_1njj5"]
+[ext_resource type="Theme" uid="uid://c7luenhbmysu4" path="res://ui/menus/main_menu_theme.tres" id="3_5ssi0"]
+[ext_resource type="FontFile" uid="uid://dda6rk7snhl76" path="res://assets/fonts/avqest.regular.ttf" id="5_h223f"]
+[ext_resource type="Theme" uid="uid://5w5mm23vsbs2" path="res://ui/menus/level_select.tres" id="5_l3r6a"]
+[ext_resource type="Texture2D" uid="uid://ujeywgh5g3uj" path="res://assets/art/barrel.png" id="6_1kjlq"]
+[ext_resource type="Texture2D" uid="uid://b15t6ilbmdxc2" path="res://assets/art/KaKes.png" id="7_tg3eq"]
+[ext_resource type="Texture2D" uid="uid://rc6w13ncwhb1" path="res://assets/art/layfe.png" id="8_g305v"]
+[ext_resource type="Texture2D" uid="uid://cndohc5iv63sk" path="res://assets/art/Kevexian.png" id="9_10bvg"]
+
+[node name="MainMenu" type="Node2D" unique_id=754890800]
+script = ExtResource("2_1njj5")
+
+[node name="MenuNavCam" type="Camera2D" parent="." unique_id=189012574]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1633350860]
+follow_viewport_enabled = true
+
+[node name="Menu" type="Control" parent="CanvasLayer" unique_id=1898736281]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_5ssi0")
+
+[node name="Main" type="Control" parent="CanvasLayer/Menu" unique_id=1398158512]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Menu/Main" unique_id=942568257]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5oih7")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Menu/Main" unique_id=683959359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Menu/Main" unique_id=2096936352]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/Main/CenterContainer" unique_id=984134927]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer" unique_id=304132743]
+layout_mode = 2
+text = "The Tearing of the Tapestry"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer" unique_id=1983224525]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MainContinue" type="Button" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer" unique_id=992330008]
+layout_mode = 2
+text = "Continue"
+
+[node name="MainNew" type="Button" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer" unique_id=1867823643]
+layout_mode = 2
+text = "New Game"
+
+[node name="MainEncyclopedia" type="Button" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer" unique_id=1197462737]
+layout_mode = 2
+text = "Encyclopedia"
+
+[node name="MainSettings" type="Button" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer" unique_id=2125334834]
+layout_mode = 2
+text = "Settings"
+
+[node name="MainExit" type="Button" parent="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer" unique_id=36122155]
+layout_mode = 2
+text = "Exit"
+
+[node name="Exit" type="Control" parent="CanvasLayer/Menu" unique_id=928746823]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1080.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Menu/Exit" unique_id=1570191670]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_1njj5")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Menu/Exit" unique_id=129364347]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/Exit/CenterContainer" unique_id=549494767]
+layout_mode = 2
+
+[node name="ExitMain" type="Button" parent="CanvasLayer/Menu/Exit/CenterContainer/VBoxContainer" unique_id=733647818]
+layout_mode = 2
+text = "Back"
+
+[node name="ExitExit" type="Button" parent="CanvasLayer/Menu/Exit/CenterContainer/VBoxContainer" unique_id=1760270797]
+layout_mode = 2
+text = "Quit"
+
+[node name="ChapterModule" type="Control" parent="CanvasLayer/Menu" unique_id=179063229]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1920.0
+offset_right = 1920.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_l3r6a")
+
+[node name="Background" type="TextureRect" parent="CanvasLayer/Menu/ChapterModule" unique_id=1030017891]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_1kjlq")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule" unique_id=1887764912]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer" unique_id=1862702045]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer" unique_id=1477079866]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer" unique_id=1796943430]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer" unique_id=1619874080]
+layout_mode = 2
+
+[node name="LevelSelect" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control" unique_id=1052471877]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 0
+offset_left = -16.0
+offset_right = 664.0
+offset_bottom = 1000.0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect" unique_id=1875236563]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer" unique_id=1411594103]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer" unique_id=2096674754]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer" unique_id=2118269530]
+layout_mode = 2
+texture_normal = ExtResource("3_1njj5")
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer" unique_id=708659251]
+layout_mode = 2
+text = "Level 1"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer" unique_id=589085550]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer2" unique_id=121745812]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer2" unique_id=2133476566]
+layout_mode = 2
+texture_normal = ExtResource("3_1njj5")
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer2" unique_id=1247218318]
+layout_mode = 2
+text = "Level 2"
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer" unique_id=1327422888]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer3" unique_id=913747469]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer3" unique_id=1217913514]
+layout_mode = 2
+texture_normal = ExtResource("3_1njj5")
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer3" unique_id=1740315528]
+layout_mode = 2
+text = "Level 3"
+
+[node name="MarginContainer4" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer" unique_id=169745198]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer4" unique_id=518667413]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer4" unique_id=1516726710]
+layout_mode = 2
+texture_normal = ExtResource("3_1njj5")
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Control/LevelSelect/VBoxContainer/MarginContainer4" unique_id=1246539205]
+layout_mode = 2
+text = "Level 4"
+
+[node name="ChapterSelect" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer" unique_id=1577928293]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect" unique_id=952356716]
+layout_mode = 2
+
+[node name="Chapter1Select" type="TextureButton" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect" unique_id=1821315279]
+layout_mode = 2
+texture_normal = ExtResource("7_tg3eq")
+texture_pressed = ExtResource("9_10bvg")
+texture_hover = ExtResource("8_g305v")
+stretch_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select" unique_id=1271797222]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select/VBoxContainer" unique_id=1448250927]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select/VBoxContainer/MarginContainer" unique_id=632389672]
+layout_mode = 2
+text = "Chapter 1"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select/VBoxContainer" unique_id=16891979]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select/VBoxContainer/MarginContainer2" unique_id=1527918744]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_h223f")
+text = "The King's Call"
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select/VBoxContainer" unique_id=1717793413]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/ChapterModule/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ChapterSelect/Chapter1Select/VBoxContainer/MarginContainer3" unique_id=242033183]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_h223f")
+text = "Description of the level. testing for text wrapping"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="pressed" from="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer/MainNew" to="." method="_on_main_new_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/Main/CenterContainer/VBoxContainer/VBoxContainer/MainExit" to="." method="_on_main_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/Exit/CenterContainer/VBoxContainer/ExitExit" to="." method="_on_exit_exit_pressed"]
