@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxbdl1dwkdmh6"]
 
-[ext_resource type="Script" uid="uid://coxtf3ieedo1c" path="res://level_camera.gd" id="1_cr4wk"]
+[ext_resource type="Script" uid="uid://cmq7ryr1nhb0g" path="res://level_camera.gd" id="1_cr4wk"]
 [ext_resource type="PackedScene" uid="uid://cqim1cf0qs84r" path="res://ui/gamplay_ui/player_ui.tscn" id="2_himew"]
 
 [node name="LevelCamera" type="Camera2D" unique_id=681243658]
