@@ -17,7 +17,7 @@
 
 [node name="MainMenu" type="Node2D" unique_id=754890800]
 script = ExtResource("2_1njj5")
-menu_swap_dur = 0.745
+menu_swap_dur = 0.75
 
 [node name="MenuNavCam" type="Camera2D" parent="." unique_id=189012574]
 
@@ -160,7 +160,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Menu/Main" unique_id=942568257]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
