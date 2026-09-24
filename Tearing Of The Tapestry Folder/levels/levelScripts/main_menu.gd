@@ -6,7 +6,7 @@ signal change_scene(chapter_name: String, level_name: String)
 @export var menu_swap_dur: float = 1.0
 
 var can_interact: bool = true # Specific to moving camera to other containers
-var can_open_select: bool = true # Specific to opening level panels
+#var can_open_select: bool = true # Specific to opening level panels
 var chapter_nav_hidden: bool = true # Controls if buttons on camera are visible or not
 var current_container: Array = [] # Set as reference to node, plus index along containers
 
@@ -65,7 +65,6 @@ func _ready() -> void:
 	current_container = [containers[0], 0]
 	_init_level_buttons()
 
-
 # Connects all the level buttons to a custom function that will change the level to the selected level
 func _init_level_buttons() -> void:
 	await self.ready
@@ -91,12 +90,13 @@ func _move_cam(node: int, custom_pos: Vector2) -> void:
 		)
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_trans(Tween.TRANS_CIRC)
 	if custom_pos != Vector2.INF:
 		tween.tween_property(menu_nav_cam, 'position', custom_pos + offset, menu_swap_dur)
 	else:
 		tween.tween_property(menu_nav_cam, 'position', current_container[0].position + offset, menu_swap_dur)
 	
+	await tween.finished
 	if can_interact == false:
 		can_interact = true
 
@@ -108,9 +108,6 @@ func _move_cam_init(node: int, custom_pos: Vector2 = Vector2.INF) -> void:
 
 
 func _toggle_chapter_nav() -> void:
-	if !can_interact:
-		return
-	
 	var mod: int = 0
 	if chapter_nav_hidden:
 		mod = 255
@@ -129,10 +126,10 @@ func _toggle_chapter_nav() -> void:
 
 
 func _toggle_level_select() -> void:
-	if !can_open_select:
+	if !can_interact:
 		return
 	
-	can_open_select = false
+	can_interact = false
 	var level_buttons = current_container[0].find_child('LevelSelect')
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
@@ -144,9 +141,9 @@ func _toggle_level_select() -> void:
 	else:
 		level_select_vis[current_container[0]] = false
 		tween.tween_property(level_buttons, 'position:x', level_buttons.position.x - 600, menu_swap_dur/2.0)
-		
+	
 	await get_tree().create_timer(menu_swap_dur/2.0).timeout
-	can_open_select = true
+	can_interact = true
 
 
 func _change_scene(chapter: String, level: String) -> void:
@@ -191,9 +188,6 @@ func _open_start(chapter_name: String, button_name: String) -> void:
 	
 	queued_chapter = chapter_name.substr(0, 2) + chapter_name.substr(chapter_name.length() - 1, 1)
 	queued_level = button_name
-	
-	print(queued_chapter)
-	print(queued_level)
 
 
 func _on_start_selected_level_pressed() -> void:
