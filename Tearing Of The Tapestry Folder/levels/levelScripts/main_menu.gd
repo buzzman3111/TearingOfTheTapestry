@@ -5,10 +5,9 @@ signal change_scene(chapter_name: String, level_name: String)
 
 @export var menu_swap_dur: float = 1.0
 
-var can_interact: bool = true # Specific to moving camera to other containers
-#var can_open_select: bool = true # Specific to opening level panels
+var can_interact: bool = true # Can user interact with buttons?
 var chapter_nav_hidden: bool = true # Controls if buttons on camera are visible or not
-var current_container: Array = [] # Set as reference to node, plus index along containers
+var current_container: Array = [] # Set as reference to node, plus index along containers (ex. <MainMenuNode>, 0)
 
 var queued_chapter: String = ''
 var queued_level: String = ''
@@ -43,6 +42,7 @@ var level_select_vis: Dictionary[Control, bool]
 
 
 func _ready() -> void:
+	can_interact = true
 	menu_nav_cam.make_current()
 	var cam_start_pos = Vector2(
 		ProjectSettings.get_setting('display/window/size/viewport_width')/2,
@@ -90,7 +90,7 @@ func _move_cam(node: int, custom_pos: Vector2) -> void:
 		)
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_CIRC)
+	tween.set_trans(Tween.TRANS_CUBIC)
 	if custom_pos != Vector2.INF:
 		tween.tween_property(menu_nav_cam, 'position', custom_pos + offset, menu_swap_dur)
 	else:
@@ -108,6 +108,9 @@ func _move_cam_init(node: int, custom_pos: Vector2 = Vector2.INF) -> void:
 
 
 func _toggle_chapter_nav() -> void:
+	if !can_interact:
+		return
+	
 	var mod: int = 0
 	if chapter_nav_hidden:
 		mod = 255
@@ -147,6 +150,7 @@ func _toggle_level_select() -> void:
 
 
 func _change_scene(chapter: String, level: String) -> void:
+	can_interact = false
 	print('changing scene to ' + chapter + ': ' + level)
 	change_scene.emit(chapter, level)
 
@@ -157,8 +161,8 @@ func _on_main_exit_pressed() -> void:
 	_move_cam_init(1)
 
 func _on_main_new_pressed() -> void:
-	_move_cam_init(2)
 	_toggle_chapter_nav()
+	_move_cam_init(2)
 
 func _on_exit_exit_pressed() -> void:
 	get_tree().quit()
@@ -168,8 +172,8 @@ func _on_exit_main_pressed() -> void:
 
 func _on_previous_pressed() -> void:
 	if current_container[0] == chapter_module_1:
-		_move_cam_init(0)
 		_toggle_chapter_nav()
+		_move_cam_init(0)
 	else:
 		var screen_width = ProjectSettings.get_setting('display/window/size/viewport_width')
 		_move_cam_init(current_container[1]-1, current_container[0].position - Vector2(screen_width, 0))
