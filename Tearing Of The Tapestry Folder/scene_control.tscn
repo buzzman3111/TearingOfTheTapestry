@@ -3,7 +3,76 @@
 [ext_resource type="Script" uid="uid://b3il617hww5n7" path="res://scene_control.gd" id="1_n5q7a"]
 [ext_resource type="PackedScene" uid="uid://d0dibfr5csda3" path="res://levels/main_menu.tscn" id="1_uqliy"]
 
+[sub_resource type="Animation" id="Animation_n5q7a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayLayer/TransitionOverlay:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 255)]
+}
+
+[sub_resource type="Animation" id="Animation_qlcdj"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayLayer/TransitionOverlay:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.033333335, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_w0n7r"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayLayer/TransitionOverlay:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w0n7r"]
+_data = {
+&"RESET": SubResource("Animation_n5q7a"),
+&"fade_in": SubResource("Animation_qlcdj"),
+&"fade_out": SubResource("Animation_w0n7r")
+}
+
 [node name="SceneControl" type="Node" unique_id=1678154593]
 script = ExtResource("1_n5q7a")
 
 [node name="MainMenu" parent="." unique_id=754890800 instance=ExtResource("1_uqliy")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=726073202]
+libraries/ = SubResource("AnimationLibrary_w0n7r")
+
+[node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1968985813]
+layer = 999
+
+[node name="TransitionOverlay" type="ColorRect" parent="OverlayLayer" unique_id=398405612]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 255)
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
