@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cqyjofub3onk5"]
+
+[ext_resource type="Script" uid="uid://c258hckywf440" path="res://characters/enemies/simple_ranged_enemy.gd" id="1_4idst"]
+[ext_resource type="Texture2D" uid="uid://ujeywgh5g3uj" path="res://assets/art/barrel.png" id="1_mf35v"]
+[ext_resource type="Script" uid="uid://ccg5sfcw5xh5y" path="res://characters/players/player_stats.gd" id="2_4idst"]
+[ext_resource type="Script" uid="uid://cnln4jjtav5hq" path="res://characters/attacks/projectiles/projectile_spawner.gd" id="3_fgvqc"]
+[ext_resource type="PackedScene" uid="uid://cgb50nrqpgx4x" path="res://characters/enemies/attacks/test_enemy_projectile.tscn" id="5_fgvqc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0uonu"]
+radius = 45.0
+height = 132.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7a4qx"]
+radius = 95.189285
+
+[node name="SimpleRangedEnemy" type="CharacterBody2D" unique_id=1270120645]
+script = ExtResource("1_4idst")
+attack_range = 600.0
+detection_range = 2000.0
+
+[node name="Aim" type="Node2D" parent="." unique_id=933915972]
+
+[node name="ProjectileSpawner" type="Node" parent="." unique_id=1079747162 node_paths=PackedStringArray("player_stats", "aim")]
+script = ExtResource("3_fgvqc")
+projectile_scenes = Array[PackedScene]([ExtResource("5_fgvqc")])
+player_stats = NodePath("../Stats")
+aim = NodePath("../Aim")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1785279469]
+scale = Vector2(10, 10)
+texture = ExtResource("1_mf35v")
+region_enabled = true
+region_rect = Rect2(11, 10, 9, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1270788342]
+shape = SubResource("CapsuleShape2D_0uonu")
+
+[node name="DamageArea" type="Area2D" parent="." unique_id=1360485298]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=1529338679]
+shape = SubResource("CircleShape2D_7a4qx")
+
+[node name="Stats" type="Node" parent="." unique_id=957316617]
+script = ExtResource("2_4idst")
+HP = 10
+PROJECTILE_DAMAGE = 20
